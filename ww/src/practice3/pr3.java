@@ -62,6 +62,8 @@ public class pr3 {
 						}
 
 					}
+					else
+						break;
 				}
 
 			}
