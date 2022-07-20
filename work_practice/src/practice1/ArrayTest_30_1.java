@@ -1,10 +1,10 @@
-
+package practice;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
-public class ArrayTest_30 {
+public class ArrayTest_30_1 {
 
 	public static void main(String[] args) throws Exception {
 		System.setIn(new FileInputStream("ArrayTest_30_input.txt"));
