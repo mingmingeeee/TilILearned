@@ -1,11 +1,12 @@
 package algo_ws_03_2;
+// 백준 4949
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-public class Main3 {
+public class Main {
 
 	static Stack<Character> stack = new Stack<Character>();
 	
@@ -21,34 +22,47 @@ public class Main3 {
 			if(s.equals(".")) {
 				break;
 			}
-
-			for(int i=0; i<s.length(); i++) {
-				if(s.charAt(i)=='(' || s.charAt(i)=='[') {
-					stack.push(s.charAt(i));
-				} else if(s.charAt(i)==')' && !stack.empty()) {
-					if('(' == stack.peek()) {
-						stack.pop();
-					}else {
-						stack.push(s.charAt(i));
-					}
-				} else if(s.charAt(i)==']' && !stack.empty()) {
-					if('[' == stack.peek()) {
-						stack.pop();
-					}else {
-						stack.push(s.charAt(i));
-					}
-				}
-			}
 			
-			if(stack.empty())
-				sb.append("yes\n");
-			else
-				sb.append("no\n");
+			sb.append(S(s));
 		
 		}
 		System.out.println(sb);
 	}
-	
+	static String S(String s) {
+		
+		for(int i=0; i<s.length(); i++) {
+			
+			char c = s.charAt(i);
+			if(c=='(' || s.charAt(i)=='[') {
+				
+				stack.push(c);
+				
+			} else if(c==')') {
+				
+				if(!stack.empty() && '(' == stack.peek()) {
+					stack.pop();
+				}else {
+					return "no\n";
+				}
+				
+			} else if(c==']') {
+				if(!stack.empty() &&'[' == stack.peek()) {
+					stack.pop();
+				}else {
+					return "no\n";
+				}
+			}
+			
+		}
+		
+		if(stack.empty())
+			return "yes\n";
+		else
+			return "no\n";
+		
+		
+	}
+	// 반례 .] -> ]에서 넣지를 않으니까 계속 yes가 나옴
 	
 	
 }
