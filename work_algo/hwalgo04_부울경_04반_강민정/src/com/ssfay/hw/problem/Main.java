@@ -6,6 +6,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
+// snippet: [본인이 등록한 이름] 타이핑 후  ctrl + space
+// 코드 정렬: ctrl + a 누른 후 ctrl + shift + i
+// 자동 import: ctrl + shift + o
+
 public class Main {
 
 	public static void main(String[] args) throws IOException {
