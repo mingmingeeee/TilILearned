@@ -1,4 +1,4 @@
-package week00;
+package src.com.ssafy.hw.problem;
 
 // 밑에서 가는 -> 한가지 빠르게 찾는
 import java.io.BufferedReader;
@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Solution {
+public class Solution2 {
 
 	public static void main(String[] args) throws IOException {
 
