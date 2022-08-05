@@ -38,27 +38,41 @@ public class Main {
 		for (int i = 1; i <= N; i++) {
 			St top = new St(i,  Integer.parseInt(st.nextToken())); // 들어올 값
 
-			// 6 9 5 7 4
-			if (!stack.isEmpty() && stack.peek().height < top.height) {
-				
-				stack.pop();
-				if(stack.isEmpty())
-					sb.append(0 +" ");
-				else {
+			while(!stack.isEmpty()) {
+				if(stack.peek().height >= top.height) {
 					sb.append(stack.peek().i + " ");
+					break;
 				}
-				
-				stack.push(top);
-			} else {
-				
-				if(!stack.isEmpty()) {
-					sb.append(stack.peek().i + " ");}
-				else {
-					sb.append(0 +" ");
-				}
-				
-				stack.push(top);
+				stack.pop();
 			}
+			
+			if(stack.isEmpty())
+				sb.append(0 + " ");
+			
+			stack.push(top);
+			
+			// 6 9 5 7 4
+//			if (!stack.isEmpty() && stack.peek().height < top.height) {
+//				
+//				stack.pop();
+//				if(stack.isEmpty())
+//					sb.append(0 +" ");
+//				else {
+//					sb.append(stack.peek().i + " ");
+//				}
+//				
+//				stack.push(top);
+//			} else {
+//				
+//				if(!stack.isEmpty()) {
+//					sb.append(stack.peek().i + " ");}
+//				else {
+//					sb.append(0 +" ");
+//				}
+//				
+//				stack.push(top);
+//			}
+//			
 		}
 		
 		
