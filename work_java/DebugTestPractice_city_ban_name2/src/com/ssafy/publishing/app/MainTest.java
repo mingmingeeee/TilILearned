@@ -44,7 +44,7 @@ public class MainTest {
 		BookMgr subMgr=new BookMgrImpl();
 		System.out.println();		
 		
- //<- 주석 해제 후 작성 : start ////////////////////////////////
+//<- 주석 해제 후 작성 : start ////////////////////////////////
 		System.out.println("11.과목 등록");
 		// 정상 출력 예: 
 		// 11.과목 등록
@@ -83,7 +83,7 @@ public class MainTest {
 			System.out.println(e.getMessage());
 		}
 		System.out.println();
-  //<- 주석 해제 후 작성 : end /////////////////////////////////
+ //<- 주석 해제 후 작성 : end /////////////////////////////////
 		
 		
 		

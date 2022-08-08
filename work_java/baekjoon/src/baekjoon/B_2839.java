@@ -3,7 +3,6 @@ package baekjoon;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 
 public class B_2839 {
 
@@ -12,26 +11,20 @@ public class B_2839 {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
 
-		int A = Integer.parseInt(in.readLine());
+		int input = Integer.parseInt(in.readLine());
 
-		int b1 = A/5;
-		int b2 = A%5;
-		int b3 = b2/3;
-		
-		int result1 = b1*5 + b3*3;
-		int result2 = b1+b3;
-		
-		if(result1 != A) {
-			if(A%3==0) {
-				b1 = 0; 
-				b3 = A/3;
-				result2 = b1+b3;
-			}else {
-				result2 = -1;
-			}
+		int k = 0;
+		int min = -1;
+		while (true) {
+			if ((input - (k * 5)) % 3 == 0)
+				min = k; // 5kg 봉지
+			k++;
+			if (k >= input / 5 + 1)
+				break;
 		}
-		
-		sb.append(result2);
+		if (min > -1)
+			min = min + (input - min * 5) / 3; // 5kg + 3kg
+		sb.append(min);
 
 		sb.append("\n");
 
