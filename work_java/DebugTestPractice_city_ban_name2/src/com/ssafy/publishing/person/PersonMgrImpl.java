@@ -19,7 +19,7 @@ public class PersonMgrImpl implements PersonMgr {
 		people=new ArrayList<Person>();
 	}
 	public static PersonMgr getInstance() {
-		if(instance == null)
+		if(instance==null)
 			instance = new PersonMgrImpl();
 		return instance;
 	}
@@ -43,10 +43,9 @@ public class PersonMgrImpl implements PersonMgr {
 	}
 	@Override
 	public void delete(String name) {
-		for(int i=0; i<people.size(); i++) {
+		for(int i=people.size()-1; i>=0; i--) {
 			if(people.get(i).getName().equals(name)) {
 				people.remove(i);
-				i--;
 			}
 		}
 	}	
@@ -59,7 +58,8 @@ public class PersonMgrImpl implements PersonMgr {
 				if(obj instanceof List) {
 					people = (List<Person>) obj;
 				}
-			} catch (IOException | ClassNotFoundException e) {
+					
+			} catch (ClassNotFoundException | IOException e) {
 				System.out.println("[SYSTEM] 파일 읽기 실패");
 			}
 		}
@@ -70,8 +70,9 @@ public class PersonMgrImpl implements PersonMgr {
 			oos.writeObject(people);
 			oos.flush();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			System.out.println("[SYSTEM] 파일 쓰기 실패");
-		}
+		} 
 		people=null;
 	}
 }

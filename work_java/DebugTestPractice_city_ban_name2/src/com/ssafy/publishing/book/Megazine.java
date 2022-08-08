@@ -6,13 +6,11 @@ public class Megazine extends Book {
 	
 	public Megazine() {}
 	
-
 	public Megazine(String title, int page, int year) {
-		// TODO Auto-generated constructor stub
 		super(title, page);
-		setYear(year);
+		this.year = year;
 	}
-
+	
 
 	public int getYear() {
 		return year;
