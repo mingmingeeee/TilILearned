@@ -1,6 +1,6 @@
 package algo_ws_07_3;
 
-// 시간 초과 
+// 시간 초과 해결
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -49,8 +49,7 @@ public class Solution {
 			// 0, 0부터 시작 -> 결과 저장하는 로직 만들기 -> 반복... N*N만큼 반복 
 			for (int x = 0; x < N; x++) {
 				for (int y = 0; y < N; y++) {
-					Stack<Path> visited = new Stack<>();
-					move(x, y, 0, visited, x, y);
+					move(x, y, 0, 0, 0, x, y);
 				}
 			}
 
@@ -67,10 +66,10 @@ public class Solution {
 	static int max = -1;
 	static int min_x = Integer.MAX_VALUE;
 
-	public static void move(int x, int y, int count, Stack<Path> visited, int x1, int y1) {
+	public static void move(int x, int y, int count, int dx1, int dy1, int x1, int y1) {
 
-		if (!visited.isEmpty()) {
-			if (x < 0 || x >= N || y < 0 || y >= N || data[visited.peek().x][visited.peek().y] + 1 != data[x][y]) {
+		if(count>0) {
+			if (x < 0 || x >= N || y < 0 || y >= N || data[x-dx1][y-dy1] + 1  != data[x][y]) {
 				if (max < count) {
 					max = count;
 					min_x = data[x1][y1];
@@ -84,22 +83,9 @@ public class Solution {
 
 		count++;
 		for (int i = 0; i < 4; i++) {
-			Path path = new Path(x, y);
-			visited.push(path);
-			move(x + dx[i], y + dy[i], count, visited, x1, y1);
+			move(x + dx[i], y + dy[i], count, dx[i], dy[i], x1, y1);
 		}
 
-	}
-
-}
-
-class Path {
-	int x;
-	int y;
-
-	Path(int x, int y) {
-		this.x = x;
-		this.y = y;
 	}
 
 }
