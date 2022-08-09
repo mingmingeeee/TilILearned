@@ -39,12 +39,11 @@ public class Main {
 		int q = 0;
 		sb.append("<");
 		while (poo.size() > 1) {
-			q += K-1;
-			while(q>=poo.size())
-				q = q - poo.size();
+			q = (q + K - 1) % poo.size();
+
 			sb.append(poo.remove(q) + ", ");
 		}
-		if(q>=poo.size())
+		if (q >= poo.size())
 			q = q - poo.size();
 		sb.append(poo.remove(q) + ">");
 		/**
