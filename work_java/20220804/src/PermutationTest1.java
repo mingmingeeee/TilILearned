@@ -44,13 +44,6 @@ public class PermutationTest1 {
 			isSelected[i] = false;
 		}
 		
-		// 시도하는 수가 선택되었는지 판단
-		
-		
-		// 선택되지 않았다면 수를 사용
-		
-		
-		// 다음 수 뽑으러 가기
 		
 	}
 }
