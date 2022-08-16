@@ -5,9 +5,6 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class B_12851 {
-	// 수빈: 걷거나 순간 이동 
-	// 걷는다면: X-1 or X+1
-	// 순간이동: 2*X
 
 	public static void main(String[] args) throws Exception {
 
@@ -27,22 +24,13 @@ public class B_12851 {
 		int count = 0;
 		int min_time = Integer.MAX_VALUE;
 		
-		if(N==K) {
-			System.out.println(0);
-			return;
-		}
-		
 		queue.offer(N);
 		boolean[] visited = new boolean[100_000+1];
-		visited[N] = true;
 		
 		while(!queue.isEmpty()) {
 			
 			int c = queue.size();
-			if(min_time < time) {
-				System.out.println(min_time + "\n" + count);
-				return;
-			}
+			
 			for(int i=0; i<c; i++) {
 				
 				int x = queue.poll();
@@ -66,6 +54,10 @@ public class B_12851 {
 				
 			}
 			time++;
+			if(time > min_time) {
+				System.out.println(min_time + "\n" + count);
+				return;
+			}
 			
 		}
 		
