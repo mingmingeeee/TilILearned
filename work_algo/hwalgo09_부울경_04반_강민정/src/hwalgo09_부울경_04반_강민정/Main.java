@@ -14,8 +14,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		
-		dwarfs = new int[9
-		                 ];
+		dwarfs = new int[9];
 		tmp = new int[7];
 		for(int i=0; i<9; i++) {
 			dwarfs[i] = Integer.parseInt(in.readLine()); 
