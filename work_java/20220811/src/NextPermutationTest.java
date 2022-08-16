@@ -14,7 +14,7 @@ public class NextPermutationTest { // nPr 안 됨... nPn만 됨...
 			input[i] = sc.nextInt();
 		}
 
-		// 전처리: 순열에 쓰일 수들을 오름차순 정렬
+		// 전처리: 순열에 쓰일 수들을 오름차순 정렬 -> 가장 작은 순열 만들기 위함
 		Arrays.sort(input);
 		
 		do {
@@ -23,17 +23,17 @@ public class NextPermutationTest { // nPr 안 됨... nPn만 됨...
 
 	}
 
-	public static boolean np(int[] numbers) { // numbers 배열의 상태를 근거로 다음 순열 생성, 다음 순열 존재하면 true, 아니면 false
+	private static boolean np(int[] numbers) { // numbers 배열의 상태를 근거로 다음 순열 생성, 다음 순열 존재하면 true, 아니면 false
 
 		int N = numbers.length;
-		// 1. 꼭대기 찾기 -> 맨 뒤부터 올라가는 녀석인지 보는 거
-		// 줄어드는 녀석이 있다면 교환 대상
+		// 1. 꼭대기 찾기 -> 제일 큰 값 i
+		// 교환 위치 찾기 i-1
+		System.out.println("#1" + Arrays.toString(numbers));
 		int i = N - 1;
 		while (i > 0 && numbers[i - 1] >= numbers[i]) {
 			// 꼭대기: 나보다 앞에 녀석이 같거나 커야 함 && i>0: 첫 번째 원소가 아닐 때
 			--i;
 		}
-
 		if (i == 0) { // 다음 순열을 만들 수 없는 이미 가장 큰 순열의 상태!
 			return false;
 		}
@@ -44,10 +44,9 @@ public class NextPermutationTest { // nPr 안 됨... nPn만 됨...
 		while (numbers[i - 1] >= numbers[j]) { // 찾다 찾다 못 찾으면 j가 i까지 오게 됨
 			--j;
 		}
-
 		// 3. i-1 위치 값과 j 위치값 교환
 		swap(numbers, i - 1, j);
-
+		System.out.println(i + " " + j);
 		// 4. i 위치부터 맨 뒤까지의 수열을 가장 작은 형태의 오름차순으로 변경
 		int k = N - 1;
 		while (i < k) {
@@ -57,7 +56,7 @@ public class NextPermutationTest { // nPr 안 됨... nPn만 됨...
 		return true; // 다음 순열을 만들 수 있었다는 의미 
 	}
 
-	public static void swap(int[] numbers, int i, int j) {
+	private static void swap(int[] numbers, int i, int j) {
 		int tmp = numbers[i];
 		numbers[i] = numbers[j];
 		numbers[j] = tmp;
