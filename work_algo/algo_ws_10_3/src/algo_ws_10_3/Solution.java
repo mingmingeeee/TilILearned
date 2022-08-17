@@ -35,10 +35,11 @@ public class Solution{
 			// 1. N/2
 			ingredients = new int[N];
 			for(int i=0; i<N; i++)
-				ingredients[i] = i; 
-			int[] group1 = new int[N/2];
-			int[] group2 = new int[N/2];
-			isSelected = new boolean[N];
+				ingredients[i] = i; // 인덱스 
+			int[] group1 = new int[N/2]; // 그룹1 배열
+			int[] group2 = new int[N/2]; // 그룹2 배열
+			
+			isSelected = new boolean[N]; // 그룹1 셀렉
 			comb(0, 0, group1, group2);
 			
 			sb.append(min).append("\n");
@@ -51,21 +52,16 @@ public class Solution{
 		if(cnt==N/2){
 			
 			int j = 0;
-			for(int i=0; i<N; i++) {
+			for(int i=0; i<N; i++) { // 그룹2
 				if(!isSelected[i])
 					group2[j++] = ingredients[i]; 
 			}
 			
 			int A = 0;
 			int B = 0;
-			for(int i=0; i<N/2; i++) {
+			for(int i=0; i<N/2; i++) { // 그룹1, 2 계산
 				for(int k=i+1; k<N/2; k++) {
 					A += map[group1[i]][group1[k]] + map[group1[k]][group1[i]];
-				}
-			}
-			
-			for(int i=0; i<N/2; i++) {
-				for(int k=i+1; k<N/2; k++) {
 					B += map[group2[i]][group2[k]] + map[group2[k]][group2[i]];
 				}
 			}
