@@ -5,16 +5,10 @@ import java.util.*;
 
 public class Main {
 
-	static int[] dx1 = { 0, 1, 0, -1 };
-	static int[] dy1 = { 1, 0, -1, 0 };
+	static int[] dx = { 0, 1, 0, -1 };
+	static int[] dy = { 1, 0, -1, 0 };
 
-	static int[] dx2_1 = { 0, 1, 0, 1 };
-	static int[] dx2_2 = { 0, -1, 0, -1 };
-	static int[] dy2_1 = { 1, 0, 1, 0 };
-	static int[] dy2_2 = { -1, 0, -1, 0 };
-
-	static int[] dx3 = { -1, 1, 1, -1 };
-	static int[] dy3 = { 1, 1, -1, -1 };
+	static int min = Integer.MAX_VALUE;
 
 	static int[] deltas;
 	static int[][] map;
@@ -41,41 +35,25 @@ public class Main {
 				}
 			}
 		}
-
 		deltas = new int[cctv.size()];
 
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < M; j++) {
-				// 5일 때 사방 먼저 표시
-				if (map[i][j] == 5) {
-					for (int d = 0; d < dx1.length; d++)
-						dfs(i, j, map, d);
-				}
-			}
-		}
-		
 		perm(0);
 
-		// 디버깅용
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < M; j++) {
-				System.out.print(map[i][j] + " ");
-			}
-			System.out.println();
-		}
-		
+		System.out.println(min);
 
 	}
 
 	// 감시: 9
-	static void dfs(int x, int y, int[][] data, int d, int[] dx, int[] dy) {
+	static void dfs(int x, int y, int[][] data, int d) {
 
 		int testX = x + dx[d];
 		int testY = y + dy[d];
 		if (testX >= 0 && testX < data.length && testY >= 0 && testY < data[0].length) {
+			if (data[testX][testY] == 6)
+				return;
 			if (data[testX][testY] == 0)
 				data[testX][testY] = 9;
-			dfs(testX, testY, data, d, dx, dy);
+			dfs(testX, testY, data, d);
 		}
 
 	}
@@ -88,37 +66,68 @@ public class Main {
 				tmp[i][j] = map[i][j];
 			}
 		}
-		
+
 		for (int i = 0; i < cctv.size(); i++) {
-			
 			int n = cctv.get(i).data;
-			System.out.println(n);
-			
-			switch(n) {
+
+			switch (n) {
 			case 1:
-				dfs(cctv.get(i).x, cctv.get(i).y, tmp, deltas[0], dx1, dy1);
+				dfs(cctv.get(i).x, cctv.get(i).y, tmp, deltas[i]);
 				break;
-				
-//			case 2:
-//				dfs(cctv.get(i).x, cctv.get(i).y, tmp, deltas[0]);
-//				break;
-//				
+
+			case 2:
+				dfs(cctv.get(i).x, cctv.get(i).y, tmp, deltas[i]);
+				dfs(cctv.get(i).x, cctv.get(i).y, tmp, (deltas[i] + 2) % 4);
+				break;
+
 			case 3:
-				dfs(cctv.get(i).x, cctv.get(i).y, tmp, deltas[1], dx3, dy3);
+				dfs(cctv.get(i).x, cctv.get(i).y, tmp, deltas[i]);
+				if (deltas[i] == 0)
+					dfs(cctv.get(i).x, cctv.get(i).y, tmp, dx.length-1);
+				else
+					dfs(cctv.get(i).x, cctv.get(i).y, tmp, deltas[i]-1);
+
 				break;
-				
+
 			case 4:
-				dfs(cctv.get(i).x, cctv.get(i).y, tmp, deltas[2], dx4, dy4);
+				if (deltas[i] == 0) {
+					dfs(cctv.get(i).x, cctv.get(i).y, tmp, 0);
+					dfs(cctv.get(i).x, cctv.get(i).y, tmp, 2);
+					dfs(cctv.get(i).x, cctv.get(i).y, tmp, 3);
+				} else if (deltas[i] == 1) {
+					dfs(cctv.get(i).x, cctv.get(i).y, tmp, 1);
+					dfs(cctv.get(i).x, cctv.get(i).y, tmp, 3);
+					dfs(cctv.get(i).x, cctv.get(i).y, tmp, 0);
+				} else if (deltas[i] == 2) {
+					dfs(cctv.get(i).x, cctv.get(i).y, tmp, 0);
+					dfs(cctv.get(i).x, cctv.get(i).y, tmp, 2);
+					dfs(cctv.get(i).x, cctv.get(i).y, tmp, 1);
+				} else if (deltas[i] == 3) {
+					dfs(cctv.get(i).x, cctv.get(i).y, tmp, 1);
+					dfs(cctv.get(i).x, cctv.get(i).y, tmp, 3);
+					dfs(cctv.get(i).x, cctv.get(i).y, tmp, 2);
+				}
 				break;
-				
+
 			case 5:
-				dfs(cctv.get(i).x, cctv.get(i).y, tmp, deltas[0]);
+				dfs(cctv.get(i).x, cctv.get(i).y, tmp, 0);
+				dfs(cctv.get(i).x, cctv.get(i).y, tmp, 1);
+				dfs(cctv.get(i).x, cctv.get(i).y, tmp, 2);
+				dfs(cctv.get(i).x, cctv.get(i).y, tmp, 3);
 				break;
 			}
-			
-		}
-		
 
+		}
+
+		int count = 0;
+		for (int i = 0; i < tmp.length; i++) {
+			for (int j = 0; j < tmp[0].length; j++) {
+				if (tmp[i][j] == 0)
+					count++;
+			}
+		}
+		if (min > count)
+			min = count;
 	}
 
 	static void perm(int cnt) {
@@ -128,7 +137,7 @@ public class Main {
 			return;
 		}
 
-		for (int i = 0; i < cctv.size(); i++) {
+		for (int i = 0; i < dx.length; i++) {
 			deltas[cnt] = i;
 			perm(cnt + 1);
 		}
@@ -137,15 +146,15 @@ public class Main {
 
 }
 
-class Position{
+class Position {
 	int x;
 	int y;
 	int data;
-	
-	Position(int x, int y, int data){
+
+	Position(int x, int y, int data) {
 		this.x = x;
 		this.y = y;
 		this.data = data;
 	}
-	
+
 }

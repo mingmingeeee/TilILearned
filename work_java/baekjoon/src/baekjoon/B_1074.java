@@ -21,30 +21,44 @@ public class B_1074 {
 		int N = Integer.parseInt(split[0]);
 		r = Integer.parseInt(split[1]);
 		c = Integer.parseInt(split[2]);
+		
+		
+		int size = (int) Math.pow(2, N);
 
-		co_de(N, 0, 0);
+		Divide_and_conquer(0, 0, size);
 
 	}
 
-	static void co_de(int N, int x, int y) {
+	static void Divide_and_conquer(int x, int y, int size) {
 
-		if (N == 2) {
-			for (int i = 0; i < 4; i++) {
-				int x1 = x + dx[i];
-				int y1 = y + dy[i];
-				if (x1 == c && y1 == r) {
+		if(size == 2) {
+			
+			for(int i=0; i<dx.length; i++) {
+				
+				int testX = x + dx[i];
+				int testY = y + dy[i];
+
+				if(testX == r && testY == c) {
 					System.out.println(count);
 					System.exit(0);
 				}
+				
 				count++;
 			}
 			return;
 		}
-
-		co_de(N / 2, x, y);
-		co_de(N / 2, x, y + N / 2);
-		co_de(N / 2, x + N / 2, y);
-		co_de(N / 2, x + N / 2, y + N / 2);
+		
+		if(x > r || x + size < r || y > c || y + size < c) {
+			count += size*size;
+			return;
+		}
+		
+		int half = size/2;
+		
+		Divide_and_conquer(x, y, half);
+		Divide_and_conquer(x, y + half, half);
+		Divide_and_conquer(x + half, y, half);
+		Divide_and_conquer(x + half, y + half, half);
 
 	}
 
