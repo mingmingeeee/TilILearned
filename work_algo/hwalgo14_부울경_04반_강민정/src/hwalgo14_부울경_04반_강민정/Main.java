@@ -51,7 +51,8 @@ public class Main {
 				dfs(testX, testY, depth+1);
 			}
 		}
-
+		
+		// 다른 경우의 수에 영향을 끼치면 안되므로 방문 취소 처리
 		visited[data[x][y] - 'A'] = false;
 		
 	}
