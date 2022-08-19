@@ -18,7 +18,7 @@ public class Main {
 		boolean[] visited = new boolean[100_000 + 1];
 
 		sb.append(bfs(N, K, visited));
-		
+
 		System.out.println(sb);
 
 	}
@@ -37,22 +37,22 @@ public class Main {
 			for (int i = 0; i < size; i++) {
 
 				int tmp = queue.poll();
-				
-				if(tmp == K)
+
+				if (tmp == K)
 					return depth;
 
-				if (range(tmp - 1) && !visited[tmp-1]){
-					visited[tmp-1] = true;
+				if (range(tmp - 1) && !visited[tmp - 1]) {
+					visited[tmp - 1] = true;
 					queue.offer(tmp - 1);
 				}
 
-				if (range(tmp + 1) && !visited[tmp+1]) {
-					visited[tmp+1] = true;
+				if (range(tmp + 1) && !visited[tmp + 1]) {
+					visited[tmp + 1] = true;
 					queue.offer(tmp + 1);
 				}
 
-				if (range(2 * tmp) && !visited[2*tmp]) {
-					visited[2*tmp] = true;
+				if (range(2 * tmp) && !visited[2 * tmp]) {
+					visited[2 * tmp] = true;
 					queue.offer(2 * tmp);
 				}
 
