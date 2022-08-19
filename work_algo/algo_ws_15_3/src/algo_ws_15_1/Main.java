@@ -42,6 +42,17 @@ public class Main {
 
 			}
 		}
+		
+		Collections.sort(Enemy, new Comparator<Position>() {
+			
+			public int compare(Position o1, Position o2) {
+				
+				return o1.y - o2.y;
+			};
+
+
+		}); 
+
 
 		comb(0, 0);
 
@@ -83,25 +94,24 @@ public class Main {
 
 					}
 					
-					// min 여러개일 때 y가 가장 작은
-					int min_cnt = 0;
-					int idx_y = Integer.MAX_VALUE;
-					for (int j = 0; j < tmpEnemy.size(); j++) {
-
-						int distance = Math.abs(N - tmpEnemy.get(j).x) + Math.abs(Archer[i] - tmpEnemy.get(j).y);
-						if (min == distance) {
-							if(idx_y > tmpEnemy.get(j).y) {
-								tmpx[i] = tmpEnemy.get(j).x;
-								tmpy[i] = tmpEnemy.get(j).y;
-								idx_y = tmpEnemy.get(j).y;
-							}
-						}
-
-					}
+//					// min 여러개일 때 y가 가장 작은 -> 맨 처음에 넣을 때 정렬해주면 됨 
+//					int idx_y = Integer.MAX_VALUE;
+//					for (int j = 0; j < tmpEnemy.size(); j++) {
+//
+//						int distance = Math.abs(N - tmpEnemy.get(j).x) + Math.abs(Archer[i] - tmpEnemy.get(j).y);
+//						if (min == distance) {
+//							if(idx_y > tmpEnemy.get(j).y) {
+//								tmpx[i] = tmpEnemy.get(j).x;
+//								tmpy[i] = tmpEnemy.get(j).y;
+//								idx_y = tmpEnemy.get(j).y;
+//							}
+//						}
+//
+//					}
 
 				}
 
-				// 적 ㅂㅂ
+				// 공격으로 적 ㅂㅂ
 				for (int i = 0; i < 3; i++) {
 					for (int j = tmpEnemy.size() - 1; j >= 0; j--) {
 						if (tmpx[i] == tmpEnemy.get(j).x && tmpy[i] == tmpEnemy.get(j).y) {
@@ -113,7 +123,7 @@ public class Main {
 				}
 				
 
-				// 적 ㅂㅂ
+				// 좌표 나가면 적 ㅂㅂ
 				for (int j = tmpEnemy.size() - 1; j >= 0; j--) {
 					int x = tmpEnemy.get(j).x + 1;
 					if (x >= N)
