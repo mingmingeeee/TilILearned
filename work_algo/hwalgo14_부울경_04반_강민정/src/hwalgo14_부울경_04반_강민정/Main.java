@@ -30,13 +30,15 @@ public class Main {
 			data[i] = c; 
 		}
 		
-		dfs(0, 0);
+		dfs(0, 0, 1);
 		
 		System.out.println(max);
 		
 	}
-	static int count = 1;
-	static void dfs(int x, int y) {
+
+	static void dfs(int x, int y, int depth) {
+		
+		max = Math.max(max, depth);
 		
 		visited[data[x][y] - 'A'] = true;
 		for(int i=0; i < dx.length; i++) {
@@ -45,14 +47,11 @@ public class Main {
 			
 			if(0 <= testX && testX < R && 0 <= testY && testY < C
 					&& !visited[data[testX][testY] - 'A']) {
-				count++;
 
-				if(max < count)
-					max = count;
-				dfs(testX, testY);
+				dfs(testX, testY, depth+1);
 			}
 		}
-		count--;
+
 		visited[data[x][y] - 'A'] = false;
 		
 	}
