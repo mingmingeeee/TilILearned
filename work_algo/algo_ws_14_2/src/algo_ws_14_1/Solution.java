@@ -3,7 +3,7 @@ package algo_ws_14_1;
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class Solution {
 	
 	static int N;
 	static int[][] people;
