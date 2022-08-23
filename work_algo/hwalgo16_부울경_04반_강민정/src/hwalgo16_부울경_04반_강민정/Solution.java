@@ -1,6 +1,5 @@
 package hwalgo16_부울경_04반_강민정;
 
-
 import java.io.*;
 import java.util.*;
 
