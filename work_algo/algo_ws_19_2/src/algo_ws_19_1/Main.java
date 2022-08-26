@@ -35,7 +35,6 @@ public class Main {
 
 		int V = Integer.parseInt(split[0]);
 		int E = Integer.parseInt(split[1]);
-
 		int K = Integer.parseInt(in.readLine()) - 1;
 
 		Node[] adjList = new Node[V];
