@@ -13,8 +13,11 @@ public class Main {
 	private static List<Position> cleaner = new ArrayList<>();
 	private static Queue<Position> air = new ArrayDeque<>();
 
-	private static int[] dx = { 0, 0, -1, 1 };
-	private static int[] dy = { -1, 1, 0, 0 };
+	private static int[] dx = { 0, 1, 0, -1 };
+	private static int[] dy = { 1, 0, -1, 0 };
+
+	private static int R;
+	private static int C;
 
 	private static class Position {
 		int x;
@@ -33,8 +36,8 @@ public class Main {
 
 		String[] split = in.readLine().split(" ");
 
-		int R = Integer.parseInt(split[0]);
-		int C = Integer.parseInt(split[1]);
+		R = Integer.parseInt(split[0]);
+		C = Integer.parseInt(split[1]);
 		int T = Integer.parseInt(split[2]);
 
 		room = new int[R][C];
@@ -53,21 +56,23 @@ public class Main {
 		for (int i = 0; i < T; i++) {
 
 			spread();
-			clean(0, dx1, dy1);
+			clean();
 
 		}
 
-//		for (int i = 0; i < R; i++) {
-//			for (int j = 0; j < C; j++) {
-//				System.out.print(room[i][j] + " ");
-//			}
-//			System.out.println();
-//		}
+		int sum = 0;
+		for(Position p : air) {
+			sum += room[p.x][p.y];
+		}
+
+		sb.append(sum);
+
+		System.out.println(sum);
 
 	}
 
 	private static boolean isRange(int x, int y) {
-		if (0 <= x && x < room.length && 0 <= y && y < room.length)
+		if (0 <= x && x < room.length && 0 <= y && y < room[0].length)
 			return true;
 		return false;
 	}
@@ -91,7 +96,6 @@ public class Main {
 					count++;
 					tmp[testX][testY] += room[cur.x][cur.y] / 5;
 					visited[testX][testY] = true;
-					air.offer(new Position(testX, testY));
 				}
 			}
 			tmp[cur.x][cur.y] += room[cur.x][cur.y] - room[cur.x][cur.y] / 5 * count;
@@ -107,47 +111,58 @@ public class Main {
 			}
 		}
 
+
 	}
 
-	static int[] dx1 = { 0, -1, 0, 1 };
-	static int[] dy1 = { 1, 0, -1, 0 };
+	static void clean() {
 
-	static int[] dx2 = { 1, 0, -1, 0 };
-	static int[] dy2 = { 0, 1, 0, -1 };
+		int top = cleaner.get(0).x;
 
-	private static void clean(int c, int[] dxo, int[] dyo) {
-
-		int airX = cleaner.get(c).x;
-		int airY = cleaner.get(c).y + 1;
-
-		int[][] tmp = new int[room.length][room[0].length];
-
-		int d = 0;
-
-		int size = air.size();
-		for (int i = 0; i < size; i++) {
-			Position cur = air.poll();
-
-			int testX = cur.x + dxo[d];
-			int testY = cur.y + dyo[d];
-			if (isRange(testX, testY) && room[testX][testY] != -1 && testX <= airX) {
-				air.offer(new Position(testX, testY));
-				tmp[testX][testY] = room[cur.x][cur.y];
-			} else if (!isRange(testX, testY))
-				d++;
-			else
-				air.offer(new Position(cur.x, cur.y));
-
+		for (int x = top - 1; x > 0; x--) {
+			room[x][0] = room[x - 1][0];
 		}
+
+		for (int y = 0; y < C - 1; y++) {
+			room[0][y] = room[0][y + 1];
+		}
+
+		for (int x = 0; x < top; x++) {
+			room[x][C - 1] = room[x + 1][C - 1];
+		}
+
+		for (int y = C - 1; y > 1; y--) {
+			room[top][y] = room[top][y - 1];
+		}
+
+		room[top][1] = 0;
+
+		int bottom = cleaner.get(1).x;
+
+		for (int x = bottom + 1; x < R - 1; x++) {
+			room[x][0] = room[x + 1][0];
+		}
+
+		for (int y = 0; y < C - 1; y++) {
+			room[R - 1][y] = room[R - 1][y + 1];
+		}
+
+		for (int x = R - 1; x > bottom; x--) {
+			room[x][C - 1] = room[x - 1][C - 1];
+		}
+
+		for (int y = C - 1; y > 1; y--) {
+			room[bottom][y] = room[bottom][y - 1];
+		}
+
+		room[bottom][1] = 0;
 
 		for (int i = 0; i < room.length; i++) {
 			for (int j = 0; j < room[0].length; j++) {
-				System.out.print(tmp[i][j] + " ");
+				if (room[i][j] > 0) {
+					air.offer(new Position(i, j));
+				}
 			}
-			System.out.println();
 		}
-		System.out.println();
 
 	}
-
 }

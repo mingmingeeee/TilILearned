@@ -1,4 +1,4 @@
-package algo_ws_18_2;
+package SWEA;
 
 import java.io.*;
 import java.util.*;
