@@ -27,8 +27,8 @@ public class TopologySortTest {
 		V = Integer.parseInt(st.nextToken()); // 정점 수
 		E = Integer.parseInt(st.nextToken()); // 간선 수
 
-		adjList = new Node[V+1]; // 각 정점별 인접 리스트
-		inDegree = new int[V+1]; // 정점별 진입 차수 정보 리스트
+		adjList = new Node[V + 1]; // 각 정점별 인접 리스트
+		inDegree = new int[V + 1]; // 정점별 진입 차수 정보 리스트
 
 		for (int i = 0; i < E; i++) {
 			st = new StringTokenizer(in.readLine(), " ");
@@ -39,14 +39,14 @@ public class TopologySortTest {
 			adjList[from] = new Node(to, adjList[from]);
 			inDegree[to]++; // from에서 나가서 to로 들어가는 거기 때문에 to를 늘려줘야 함
 		}
-		
+
 		ArrayList<Integer> list = topologySort();
-		
-		if(list.size() == V) { // 위상 정렬 완성
-			for(Integer i : list)
+
+		if (list.size() == V) { // 위상 정렬 완성
+			for (Integer i : list)
 				System.out.print(i + " ");
 			System.out.println();
-		}else {
+		} else {
 			System.out.println("cycle..");
 		}
 	}
@@ -67,14 +67,14 @@ public class TopologySortTest {
 
 			int cur = queue.poll();
 			list.add(cur); // 나온 녀석은 처리할 게 없어서 나온 놈임 -> 처리 순서니까 list에 추가해주기
-			
-			for(Node temp = adjList[cur]; temp!= null; temp = temp.next) {
-				if(--inDegree[temp.vertex]==0) queue.offer(temp.vertex); // 진입 차수가 9이 되는 정점 queue에 넣음 
+
+			for (Node temp = adjList[cur]; temp != null; temp = temp.next) {
+				if (--inDegree[temp.vertex] == 0)
+					queue.offer(temp.vertex); // 진입 차수가 0이 되는 정점 queue에 넣음
 			}
-			
+
 		}
 
-		
 		return list;
 	}
 
