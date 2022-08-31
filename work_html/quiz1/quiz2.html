@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      /*글씨 굵기: bold, 테두리 선: solid(whatever) 색상*/
+      caption {
+        margin-bottom: 16px;
+      }
+
+      span {
+        font-weight: bold;
+        background-color: yellow;
+      }
+
+      table {
+        width: 600px;
+        height: 250px;
+        border: 1px solid #000;
+      }
+
+      td {
+        text-align: center;
+        border: 1px solid #000;
+      }
+
+      .text-left {
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <table width="600" height="250" border="">
+      <caption>
+        <strong><mark>이력서</mark></strong
+        ><br />
+        아래 정보는 거짓이 없습니다.
+      </caption>
+      <tr>
+        <td rowspan="3" align="center">사진</td>
+        <td rowspan="2" width="80" align="center">성명</td>
+        <td rowspan="2" width="150" align="center">홍 길 동</td>
+        <td colspan="2" align="center">주민등록번호</td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center">000000-0000000</td>
+      </tr>
+      <tr>
+        <td colspan="4">생년월일 2000년 01월 01일</td>
+      </tr>
+      <tr>
+        <td width="150" align="center">주소</td>
+        <td colspan="4">서울시 강남구 역삼동 77-1</td>
+      </tr>
+      <tr>
+        <td rowspan="2" align="center">연락처</td>
+        <td align="center">집</td>
+        <td>02-1234-5678</td>
+        <td rowspan="2" width="80" align="center">이메일</td>
+        <td rowspan="2" width="130">honggd@naver.com</td>
+      </tr>
+      <tr>
+        <td align="center">핸드폰</td>
+        <td>010-9876-5432</td>
+      </tr>
+    </table> -->
+
+    <table>
+      <caption>
+        <span>이력서</span>
+      </caption>
+      <caption>
+        아래 정보는 거짓이 없습니다.
+      </caption>
+      <tbody>
+        <tr>
+          <td rowspan="3">사진</td>
+          <td rowspan="2">성명</td>
+          <td rowspan="2">홍 길 동</td>
+          <td colspan="2">주민등록번호</td>
+        </tr>
+        <tr>
+          <td colspan="2">000000-0000000</td>
+        </tr>
+        <tr>
+          <td colspan="4" class="text-left">생년월일 2000년 01월 01일</td>
+        </tr>
+        <tr>
+          <td>주소</td>
+          <td colspan="4" class="text-left">서울시 강남구 역삼동 77-1</td>
+        </tr>
+        <tr>
+          <td rowspan="2">연락처</td>
+          <td>집</td>
+          <td class="text-left">02-1234-5678</td>
+          <td rowspan="2">이메일</td>
+          <td rowspan="2" class="text-left">honggd@naver.com</td>
+        </tr>
+        <tr>
+          <td>핸드폰</td>
+          <td class="text-left">010-9876-5432</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
