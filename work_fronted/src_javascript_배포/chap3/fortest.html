@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function test() {
+            var areas = ["서울", "구미", "광주", "부울경", "대전"];
+            for(var i=0; i<areas.length; i++){
+                console.log(areas[i]);
+            }
+            for(var i in areas){ // 인덱스 값
+                console.log(i);
+            }
+            areas.forEach(function(area){ // 자바 for-each랑 같음
+                console.log(area);
+            })
+
+            var ssafy = {
+                name: "안효인",
+                age: 35,
+                area: "대전",
+
+            }; // {}: 객체라는 의미 -> object
+
+            // 객체 가지고도 for문 돌리는 거 가능함 
+            // -> 이 객체에 어떤 요소가 있는지 확인 가능 
+            for(var p in ssafy){
+                console.log(p);
+            }
+
+            delete ssafy.age;
+            ssafy.address = "서울 어딘가";
+
+            for(var p in ssafy){
+                console.log(p);
+            }
+        }
+        test();
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
