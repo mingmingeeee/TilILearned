@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>시계</title>
+    <script type="text/javascript">
+      // window.onlad: 강제로 미리 body실행하고 나 실행하라 하는 것 
+      window.onload = function () {
+        setInterval(showTime, 1000);
+        // setInterval 해서 showTime 호출해라~ 
+        // setInterval: 1000(변수) 간격마다 주기적으로 호출해주기 -> 1초마다 얻어와라
+      };
+
+      // callBack 함수 
+      function showTime() {
+        var view = document.getElementById("view"); // body의 span을 얻어옴
+        var date = new Date(); // 날짜 얻어와라
+        view.innerHTML = date.toLocaleTimeString(); // view의 HTML 안으로 집어넣어라 
+      }
+    </script>
+  </head>
+  <body>
+    현재 시간 : <span id="view"></span>
+  </body>
+</html>
