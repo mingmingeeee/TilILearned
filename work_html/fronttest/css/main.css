@@ -1,0 +1,227 @@
+* { /* css 초기화(모든 tag에 속성 먹이기) -> 어떤 browser에서든 똑같이 보이게 하기 위해 */
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* a tag 속성 지정 */
+a{
+    text-decoration: none; /* a tag 밑줄 없앰 */
+    color: black;
+}
+
+/* : -> 가상 클래스 선택자 요소 */
+a:hover{
+    cursor: pointer;
+}
+
+/* 선택자 {속성: 값; 속성: 값;}*/
+
+/* 상단 Header */
+header { /* header tag에 적용 */
+    height: 70px;
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.3);
+    /* 그림자 왼쪽 바깥 부분 (시작 부분 - 여백) | 그림자의 높이 | 그림자의 음영 */
+    /* rgba() -> 마지막: 투명도 1.0이 가장 셈 */
+}
+
+/* header 아래 있는 nav 속성 -> header > nav */
+header > nav {
+    position: relative; /* 배치 기준 -> relative: 요소 자기 자신을 기준으로 자식들 배치 -> 나중에 나오는 absolute에 영향줌 */
+    margin: auto; /* 가운데 정렬 했다고 생각하면 됨 -> 내가 차지하는 영역 제외한 나머지 빈 공간을 margin으로 채우는 */
+    max-width: 1200px; /* 1200px로 고정 */
+    width: cacl(100% - 120px); /* %는 화면 크기에 따라 바뀌는데 이 때 120px 빼줘서 그만큼의자리 차지하겠다는 의미 */
+    height: 70px;
+}
+
+nav > a{
+    float: left; /* 붕~띄워서 왼쪽으로 옮겨주는 (정렬해주는) 거라고 생각 ^ㅇ^ */
+    margin-left: 20px;
+    line-height: 70px;/* 글자 높이 */
+    height: 70px;
+}
+
+nav > ul{
+    font-size: 100px;
+}
+
+/* id로 접근 */
+#logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: mediumpurple;
+    cursor: pointer; /* 마우스 사진 위에 올리면 pointer모양으로 바꾼다는 뜻 */
+}
+
+/* 기준점: nav에서 바닥, 오른쪽과 붙게끔 -> relative 지정해줘야 함 */
+.menu {
+    position: absolute; /* 위치 절대값으로 지정하겠다는 의미 */
+    bottom: 0; /* 바닥과 붙게끔 */
+    right: 0; /* 오른쪽과 붙게끔 */
+}
+
+.menu > li {
+    float: left; /* 왼쪽 정렬  */
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+.menu > li:last-child{
+    margin-right: 10px;
+}
+
+.menu-item {
+    color: darkgray;
+}
+
+.menu-item:hover{
+    color: mediumpurple;
+}
+
+/* 중앙 left Content */
+main {
+    margin: 10px auto; /* top-bottom에 10px, 비어있는 영역은 margin으로 채우겠다는 의미 -> 결국 가운데정렬 */
+    max-width: 1200px;
+    /* overflow: hidden */
+}
+
+main::after{
+    content: '';
+    display: block;
+    clear: both; /* main after에 clear:both -> 붕 떠있던 것들이 다시 들어감  */
+    /* 속성이 선언된 직후에 적용해야 먹힘 */
+}
+
+aside{
+    width: 25%;
+    float: left; /* 왼쪽 정렬 -> 붕 띄워서 옆으로 옮겨버리면 -> "내용1, 2, 3" 애들이 거기로 올라감 */
+}
+
+.content-left-profile{
+    margin: 10px auto;
+    height: 150px;
+    border: 1px solid lightblue;
+}
+
+#btn-makepoll{
+    width: 100px;
+    margin-bottom: 10px;
+    border-color: rgba(88, 88, 88, 0.3); /* 버튼 테두리 색깔 */
+    background-color: rgb(243, 242, 245); /* 버튼 색깔 */
+    color: rgb(58, 57, 57); /* 버튼 글자 색깔 */
+    border-radius: 3px; /* 버튼을 둥그스름하게 만들어주는 것 -> 꼭지점들 원 그려서 반지름이 3px인..그런.. -> 반지름 커질수록 많이 깎임 */
+}
+
+.content-left-poll{
+    padding: 10px; /* 안쪽 영역 공백  */
+    min-height: 300px; /* 요소가 가질 수 있는 최소 높이 */
+    border: 1px solid lightblue;
+    font-size: 14px;
+    color: lightslategray;
+}
+
+.vote-title{
+    padding: 10px;
+    color: #70706e;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+}
+
+.vote-question{
+    font-weight: bold;
+    font-size: 18px;
+    color: royalblue;
+}
+
+.vote-answer {
+    margin-top: 10px;
+}
+
+/* vote-answer 바로 아래 있는 ul 태그 바로 아래 있는 li 태그 전부 다!!! 적용 */
+.vote-answer > ul > li {
+    margin-top: 10px;
+    padding-left: 10px;
+}
+
+.vote-answer > ul > li:last-child {
+    margin-bottom: 10px;
+}
+
+label img {
+    width: px;
+    border-radius: 3px;
+}
+
+.vote-button {
+    text-align: right;
+    padding-right: 10px;
+    margin: 10px;
+}
+
+.vote-date {
+    margin: 20px 0 10px;
+    font-weight: bold;
+    color: #70706e;
+}
+
+.button{
+    background-color: white;
+    color: balck;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    padding: 4px;
+}
+
+.btn-primary{
+    border-color: rgba(128, 0, 128, 0.3);
+    background: rgb(128, 0, 128);
+    color: #fff;
+}
+
+article {
+    width: 75%; /* 아까 왼쪽 25% 사용하겠다고 했는데 지금은 나머지 75% 차지하겠다~~ */
+    float: right; /* 아깐 왼쪽이었고 지금은 오른쪽 */
+}
+
+article > div {
+    margin: 10px;
+    padding: 5px;
+    max-width: 900px;
+    height: 150px;
+    border: 1px solid darkgray;
+}
+
+/* 하단 Footer */
+footer {
+    /* claer: 나는 float의 영향을 받지 않겠다~!!! 그 영역으로 들어가지 않겠다~!!! */
+    /* 정리가 되면서... main tag가 차지하던 영역을 차지하며 마무리돼야함 -> float 초기화 */
+    /* clear: both */
+    margin: 10px auto;
+    padding: 10px;
+    max-width: 1200px;
+    height: 70px;
+}
+
+footer > ul {
+    float: right; /* float으로 우측 정렬 */
+}
+
+footer > ul > li {
+    /* inline-block이란: https://www.w3schools.com/css/tryit.asp?filename=trycss_inline-block_span1 */
+    /* inline과 block을 짬뽕시킨 것 */
+    display: inline;
+    margin-right: 10px;
+    height: 50px;
+    font-size: 12px;
+    color: darkgray;
+}
+
+
+/*
+display: inline
+-> inline은 width, height 속성 값 줘도 무시됨 -> padding 값만 적용됨
+display: block
+-> block은 모두 반영되지만 줄바꿈 됨
+display: inline-block
+-> inline-block은 다 반영됨 ㄱㅊㄱㅊ
+*/
