@@ -1,0 +1,12 @@
+C:\ProgramData\MySQL\MySQL Server 8.0\my.ini 열기
+
+76line 추가
+[mysqld]
+collation-server=utf8mb4_unicode_ci
+character-set-server=utf8mb4
+skip-character-set-client-handshake
+
+ALTER DATABASE homestead CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+mysql 재시작
+
