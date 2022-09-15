@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>HelloServlet</display-name>
+  
+<!--   <servlet>
+  	<servlet-name>a</servlet-name>
+  	<servlet-class>com.ssafy.hello.HelloServlet</servlet-class>
+  </servlet>
+ 
+ a라는 servlet 찾아가! a라는 servlet은 얘야 얘는 이 class야! -> 이런거 귀찮아서.. annotation 주석 방식으로 씀
+ 
+ <servlet-mapping>
+ 	<servlet-name>a</servlet-name>
+ 	<url-pattern>/hello</url-pattern>
+ </servlet-mapping> -->
+  
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>
