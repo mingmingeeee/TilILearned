@@ -65,7 +65,7 @@ public class BoardView extends HttpServlet {
 		out.println("        </div>");
 		
 		int articleNo = Integer.parseInt(request.getParameter("article_no")); // 받아오는 게 String임 
-		
+		System.out.println(articleNo);
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -153,11 +153,11 @@ public class BoardView extends HttpServlet {
 		out.println("      });");
 		out.println("      document.querySelector(\"#btn-mv-modify\").addEventListener(\"click\", function () {");
 		out.println("        alert(\"글수정하자!!!\");");
-		out.println("        location.href = \"/board1_servlet/modify\";");
+		out.println("        location.href = \"/board1_servlet/modify?article_no=" + articleNo + "\";");
 		out.println("      });");
 		out.println("      document.querySelector(\"#btn-delete\").addEventListener(\"click\", function () {");
 		out.println("        alert(\"글삭제하자!!!\");");
-		out.println("        location.href = \"/board1_servlet/delete?article_no=\"+ this.getAttribute(\"data-no\");");
+		out.println("        location.href = \"/board1_servlet/delete?article_no=" + articleNo + "\";");
 		out.println("      });");
 		out.println("    </script>");
 		out.println("  </body>");

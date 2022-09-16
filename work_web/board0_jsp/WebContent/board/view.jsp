@@ -122,11 +122,11 @@
       });
       document.querySelector("#btn-mv-modify").addEventListener("click", function () {
         alert("글수정하자!!!");
-        location.href = "";
+        location.href = "/board0_jsp/board/modify.jsp?article_no=" + <%= articleNo %>;
       });
       document.querySelector("#btn-delete").addEventListener("click", function () {
         alert("글삭제하자!!!");
-        location.href = "";
+        location.href = "/board0_jsp/board/delete.jsp?article_no=" + <%= articleNo %>;
       });
     </script>
   </body>
