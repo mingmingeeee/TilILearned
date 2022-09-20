@@ -8,8 +8,7 @@
 			e.printStackTrace();
 		}
 	} %>
-	<%	
-
+	<%
 	if(request.getMethod().equals("GET")) {
 		response.setContentType("text/html;charset=utf-8");
 		int article_no = Integer.parseInt(request.getParameter("article_no"));
@@ -25,11 +24,11 @@
 	
 			StringBuilder sql = new StringBuilder();
 			
+			pstmt = conn.prepareStatement(sql.toString());
+			
 			sql.append("select user_id, subject, content \n");
 			sql.append("from board \n");
 			sql.append("where article_no=" + article_no);
-			
-			pstmt = conn.prepareStatement(sql.toString());
 			
 			rs = pstmt.executeQuery();
 			
