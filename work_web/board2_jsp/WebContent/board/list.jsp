@@ -92,7 +92,7 @@
 							<td class="text-start"><a href="#"
 								class="article-title link-dark" data-no="<%= rs.getInt("article_no") %>"
 								style="text-decoration: none"> <%= rs.getString("subject") %> </a></td>
-							<td><%= rs.getString("uer_id") %></td>
+							<td><%= rs.getString("user_id") %></td>
 							<td><%= rs.getInt("hit") %></td>
 							<td><%= rs.getString("register_time") %></td>
 						</tr>
@@ -140,13 +140,13 @@
 		let titles = document.querySelectorAll(".article-title");
 		titles.forEach(function(title) {
 			title.addEventListener("click", function() {
-				location.href = "/board0_jsp/board/view.jsp?article_no=" + this.getAttribute("data-no");
+				location.href = "/board2_jsp/board/view.jsp?article_no=" + this.getAttribute("data-no");
 			});
 		});
 
 		document.querySelector("#btn-mv-register").addEventListener("click",
 				function() {
-					location.href = "/board0_jsp/board/write.jsp";
+					location.href = "/board2_jsp/board/write.jsp";
 				});
 	</script>
 </body>
