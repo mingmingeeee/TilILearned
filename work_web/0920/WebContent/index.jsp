@@ -1,3 +1,7 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +17,7 @@
 		</form>
 		<div style="display:none">
 			<span id="userId"></span>
+			
 			<span>님 환영합니다. </span>
 			<a href="logout">로그아웃</a>
 		</div>
@@ -20,47 +25,16 @@
 	
 	<h1>게시판 관리 Server</h1>
 	
-	<form method="post" action="/regist">
+	<form method="post" action="${pageContext.request.contextPath}/regist">
 		<label>제목: <input type="text" name="title"></label>
 		<label>내용: <input type="text" name="content"></label>
 		<label>작성자ID: <input type="text" name="id"></label>
 		<input type="submit" value="글 등록">
 	</form>
 	
-	<script>
-		window.onload = function() {
-			// 이름이 'userId'인 쿠키를 찾아 값 구하기
-			console.log(document.cookie);
-			
-			if (document.cookie) {
-				const userId = document.cookie
-					.split('; ')
-					.find(item => item.startsWith('userId'))
-					.split('=')[1];
-				
-				if (userId) {
-					let form = document.querySelector("header > form");
-					form.style.display = 'none';
-					
-					let div = document.querySelector("header > div");
-					div.style.display = 'block';
-					
-					let span = document.querySelector("#userId");
-					span.innerHTML = userId;
-				}
-			}
-		};
-	</script>
+	<a href="${root}/list">글 목록 페이지로 이동</a>
+	
 </body>
 </html>
-
-
-
-
-
-
-
-
-
 
 
