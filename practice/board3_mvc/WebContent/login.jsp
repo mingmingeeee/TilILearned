@@ -31,6 +31,7 @@
               type="password"
               placeholder="password"
             />
+    		<p style="color:red; padding-bottom: 10px">${msg}</p>
             <button id="login-btn" type="submit">로그인</button>
             <p>
               계정이 없으신가요?
