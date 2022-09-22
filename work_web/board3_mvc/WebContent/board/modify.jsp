@@ -14,14 +14,16 @@
         </div>
         <div class="col-lg-8 col-md-10 col-sm-12">
           <form id="form-modify" method="POST" action="">
+          <input type="hidden" id="act" name="act" value="modify">
+          <input type="hidden" name="articleno" value="${article.articleNo}">
             <div class="mb-3">
-              <label for="subject" class="form-label">제목 : </label>
-              <input type="text" class="form-control" id="subject" name="subject" value="글제목" />
+              <label for="subject" class="form-label">제목: </label>
+              <input type="text" class="form-control" id="subject" name="subject" value="${article.subject}" />
             </div>
             <div class="mb-3">
               <label for="content" class="form-label">내용 : </label>
               <textarea class="form-control" id="content" name="content" rows="7">
-글내용
+	${article.content}
               </textarea>
             </div>
             <div class="col-auto text-center">
@@ -53,8 +55,8 @@
       
       document.querySelector("#btn-list").addEventListener("click", function () {
       	if(confirm("취소를 하시면 작성중인 글은 삭제됩니다.\n취소하시겠습니까?")) {
-    		  let form = document.querySelector("#form-param");
-         	  
+    		  let form = document.querySelector("#form-modify");
+         	  document.querySelector("#act").value="list";
          	  form.setAttribute("action", "${root}/board");
             form.submit();
      	    }

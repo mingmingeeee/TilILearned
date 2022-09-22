@@ -48,24 +48,24 @@
               </tr>
             </thead>
             <tbody>
-
-              <tr class="text-center">
-                <th scope="row">글번호</th>
-                <td class="text-start">
-                  <a
-                    href="#"
-                    class="article-title link-dark"
-                    data-no="글번호"
-                    style="text-decoration: none"
-                  >
-                    	제목
-                  </a>
-                </td>
-                <td>작성자</td>
-                <td>조회수</td>
-                <td>작성일</td>
-              </tr>
-
+			<c:forEach var="article" items="${articles}">
+	              <tr class="text-center">
+	                <th scope="row">${article.articleNo}</th>
+	                <td class="text-start">
+	                  <a
+	                    href="#"
+	                    class="article-title link-dark"
+	                    data-no="${article.articleNo}"
+	                    style="text-decoration: none"
+	                  >
+	                    	${article.subject}
+	                  </a>
+	                </td>
+	                <td>${article.userId}</td>
+	                <td>${article.hit}</td>
+	                <td>${article.registerTime}</td>
+	              </tr>
+			</c:forEach>
             </tbody>
           </table>
         </div>
@@ -86,18 +86,21 @@
         </div>
       </div>
     </div>
-    <form id="form-no-param" method="get" action="">
-      <input type="hidden" id="act" name="act" value="">
-      <input type="hidden" id="pgno" name="pgno" value="">
-      <input type="hidden" id="key" name="key" value="">
-      <input type="hidden" id="word" name="word" value="">
-      <input type="hidden" id="articleno" name="articleno" value="">
+    <!-- form: 데이터를 넘기기 위한 꼼수...! -->
+    <form id="form-no-param" method="get" action="${root}/board">
+      <input type="hidden" id="act" name="act" value="view">
+      <input type="hidden" id="pgno" name="pgno" value="1"> <!-- ${param.pagno}  -->
+      <input type="hidden" id="key" name="key" value=""> <!-- ${param.key}  -->
+      <input type="hidden" id="word" name="word" value=""> <!-- ${param.word}  -->
+      <input type="hidden" id="articleno" name="articleno" value=""> <!-- 101줄에 있음! -->
+      <!-- 또.. view로 가면 queryString 붙임 -->
     </form>
     <script>
       let titles = document.querySelectorAll(".article-title");
       titles.forEach(function (title) {
         title.addEventListener("click", function () {
-       	  this.getAttribute("data-no");
+       	  document.querySelector("#articleno").value = this.getAttribute("data-no"); // 글 번호 가지고 가기
+       	  document.querySelector("#form-no-param").submit(); // form 데이터를 가지고 전송해라~
         });
       });
 

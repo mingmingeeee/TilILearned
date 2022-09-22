@@ -27,7 +27,7 @@
 			</div>
 			<div class="col-lg-8 col-md-10 col-sm-12">
 				<form id="form-join" method="POST" action="">
-
+					<input type="hidden" name="act" value="join">
 					<div class="mb-3">
 						<label for="username" class="form-label">이름 : </label> <input
 							type="text" class="form-control" id="username" name="username"

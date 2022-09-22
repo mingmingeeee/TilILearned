@@ -8,7 +8,7 @@
         </div>
         <div class="col-lg-8 col-md-10 col-sm-12">
           <form id="form-register" method="POST" action="">
-
+			<input type="hidden" name="act" value="write">
             <div class="mb-3">
               <label for="subject" class="form-label">제목 : </label>
               <input
