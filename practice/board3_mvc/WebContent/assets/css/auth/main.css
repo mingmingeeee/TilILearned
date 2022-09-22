@@ -1,0 +1,100 @@
+.main__container {
+  height: calc(100vh - 1rem - 2 * (var(--height-toolbar)));
+}
+
+.main__login-page {
+  width: 400px;
+  padding: 160px 0 0;
+  margin: auto;
+}
+.main__register-page {
+  width: 400px;
+  padding: 100px 0 0;
+  margin: auto;
+}
+
+.main__register-page p,
+.main__login-page p {
+  text-align: initial;
+}
+
+.main__login-page h1 {
+  font-weight: 600;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.main__register-page h1 {
+  font-weight: 600;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  /* text-align: center; */
+}
+.main__form {
+  position: relative;
+  z-index: 1;
+  background: #ffffff;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.main__form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.main__form button {
+  margin: 0 0 15px;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: var(--color-main);
+  width: 100%;
+  border: 0;
+  border-radius: 4px;
+  padding: 15px;
+  color: #ffffff;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+.main__form button:hover {
+  background: var(--color-dark);
+}
+
+.main__form button:active {
+  scale: 0.98;
+}
+
+@media (max-width: 768px) {
+  .main__form {
+    max-width: 270px;
+  }
+  .main__register-page {
+    padding: 46px 0 0;
+  }
+  .main__login-page,
+  .main__register-page {
+    text-align: center;
+  }
+}

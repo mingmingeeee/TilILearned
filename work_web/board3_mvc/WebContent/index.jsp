@@ -17,6 +17,15 @@
     <title>SSAFY</title>
   </head>
   <body>
+  
+  <c:if test="${userinfo eq null}">
+  	<!-- 로그인이 되지 않았을 때 아이디 저장 -->
+  	<!-- jsp: 서버 (Client가 요청할 때 cookie 보내니까 request로!!! -->
+  	
+  	<c:if test="${cookie.ssafy_id.value ne null}"> <!-- Cookies[] getCookies라서 null로 비교 -->
+  		<c:set var="idck" value="checked"></c:set>
+  		<c:set var="svid" value="${cookie.ssafy_id.value}"></c:set>
+  	</c:if>
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10 col-sm-12">
@@ -26,7 +35,7 @@
         </div>
         <div class="col-lg-8 col-md-10 col-sm-12">
           <form id="form-login" method="POST" action="">
-
+			<input type="hidden" name="act" value="login">
             <div class="form-check mb-3 float-end">
               <input
                 class="form-check-input"
@@ -34,6 +43,7 @@
                 value="ok"
                 id="saveid"
                 name="saveid"
+                ${idck}
               />
               <label class="form-check-label" for="saveid"> 아이디저장 </label>
             </div>
@@ -45,6 +55,7 @@
                 id="userid"
                 name="userid"
                 placeholder="아이디..."
+                value="${svid}"
               />
             </div>
             <div class="mb-3">
@@ -70,6 +81,7 @@
         </div>
       </div>
     </div>
+    <!-- 여기서 c:if 닫아버리면 밑에 js에서 오류남. 왜? -> #btn-mv-join 이런 거 다 위에 있는 건데 없으니까! -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -97,9 +109,11 @@
         }
       });
     </script>
-    
-    <div class="container">
+</c:if>
 
+ <c:if test="${userinfo ne null}">
+    <div class="container">
+	<%@ include file="/common/confirm.jsp" %>
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10 col-sm-12">
           <h2 class="my-3 py-3 shadow-sm bg-light text-center">
@@ -107,11 +121,11 @@
           </h2>
         </div>
         <div class="col-lg-8 col-md-10 col-sm-12 text-center">
-          <a href="${root}/board">글쓰기</a><br />
-          <a href="${root}/board">글목록</a>
+          <a href="${root}/board?act=mvwrite">글쓰기</a><br />
+          <a href="${root}/board?act=list">글목록</a>
         </div>
       </div>
     </div>
-
+</c:if>
   </body>
 </html>

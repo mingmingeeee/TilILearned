@@ -1,0 +1,17 @@
+footer {
+  height: var(--height-toolbar);
+  padding: 1rem 1rem 0 1rem;
+  font-size: var(--font-size-text);
+  text-align: center;
+  color: white;
+  background-color: var(--color-main);
+}
+
+footer .navbar--nav {
+  display: flex;
+  justify-content: flex-end;
+}
+
+footer .navbar--nav .nav--link {
+  margin-right: 1rem;
+}

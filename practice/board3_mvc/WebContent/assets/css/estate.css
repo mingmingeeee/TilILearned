@@ -1,0 +1,87 @@
+#estate {
+  background-color: var(--color-light-bg);
+}
+
+.estate {
+  display: inline-flex;
+  gap: 1em;
+  margin-top: 48px;
+}
+
+.estate__card {
+  padding: 48px;
+  text-align: center;
+  color: white;
+  background-color: var(--color-dark);
+  border-radius: 12px;
+}
+.estate__icon {
+  width: 120px;
+  opacity: 0.25;
+}
+
+.estate__title {
+  margin-top: 0.6em;
+  font-size: var(--font-size-larger);
+  font-weight: bold;
+}
+
+.estate__title._1 {
+  color: #6bb0f3;
+}
+.estate__title._2 {
+  color: #6bb0f3;
+}
+.estate__title._3 {
+  color: #6bb0f3;
+}
+
+.about__text {
+  margin-top: 0.8em;
+  font-size: var(--font-size-text);
+}
+
+@media (max-width: 768px) {
+  #estate {
+    margin-top: 420px;
+  }
+  .estate {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+@media (min-width: 769px) {
+  #estate {
+    grid-column: 1 / -1;
+  }
+
+  .estate__card {
+    width: 320px;
+    cursor: pointer;
+    transition: all 350ms;
+  }
+
+  .estate:hover .estate__card:not(:hover) {
+    transform: scale(0.9);
+  }
+
+  /* 흐림 필터링을 위한 덮개 */
+  .estate:hover .estate__card:not(:hover)::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+  }
+
+  .estate__card:hover {
+    transform: scale(1.04);
+  }
+  .estate__card:hover .estate__icon {
+    opacity: 1;
+  }
+}

@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
+<c:if test="${cookie.ssafy_id.value ne null}"> <!-- Cookies[] getCookies라서 null로 비교 -->
+  	<c:set var="idck" value="checked"></c:set>
+ 	<c:set var="svid" value="${cookie.ssafy_id.value}"></c:set>
+</c:if>
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -26,6 +31,7 @@
         </div>
         <div class="col-lg-8 col-md-10 col-sm-12">
           <form id="form-login" method="POST" action="">
+          <input type="hidden" name="act" value="login">
             <div class="form-check mb-3 float-end">
               <input
                 class="form-check-input"
@@ -45,7 +51,7 @@
                 id="userid"
                 name="userid"
                 placeholder="아이디..."
-                value="${saveid}"
+                value="${svid}"
               />
             </div>
             <div class="mb-3">
@@ -58,7 +64,7 @@
                 placeholder="비밀번호..."
               />
             </div>
-            <div class="text-danger mb-2"></div>
+            <div class="text-danger mb-2">${msg}</div>
             <div class="col-auto text-center">
               <button type="button" id="btn-login" class="btn btn-outline-primary mb-3">
                 로그인

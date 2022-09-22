@@ -5,7 +5,7 @@
 	<script type="text/javascript">
 		alert("로그인 후 이용 가능한 페이지입니다.");
 		location.href = "${root}/user?act=mvlogin";
-	</script>
+	</script>x
 </c:if>
 <!DOCTYPE html>
 <html lang="ko">

@@ -1,0 +1,146 @@
+/* 폰트 */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Cute+Font:400");
+
+@import url("./assets/css/intro.css");
+@import url("./assets/css/header.css");
+@import url("./assets/css/main.css");
+@import url("./assets/css/estate.css");
+@import url("./assets/css/boards.css");
+@import url("./assets/css/footer.css");
+@import url("./assets/css/modal.css");
+
+@import url("./assets/css/auth/main.css");
+
+@import url("./assets/css/apt2/apt2.css");
+
+/* ===== 변수 구간 ===== */
+:root {
+  --color-main: #7ccfed;
+  --color-sub: #004230;
+  --color-dark: #003851;
+  --color-emph: #fb849b;
+  --color-text: #281812;
+  --color-lighter: #a999ed;
+  --color-light-bd: #c3f9ff;
+  --color-light-bg: #e6f4f1;
+
+  --font-title: "Cute Font", monospace;
+
+  --font-size-title: 2.75rem;
+  --font-size-subtitle: 2rem;
+  --font-size-tag: 1.625rem;
+  --font-size-larger: 1.25rem;
+  --font-size-text: 1.125rem;
+
+  --height-toolbar: 5rem;
+}
+
+/* ===== 리셋 구간 ===== */
+
+body {
+  margin: 0;
+  font-family: "Noto Sans KR", sans-serif;
+
+  /* 개발용 설정 */
+  /*min-height: 300vh;*/
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: normal;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+strong,
+em {
+  font-weight: inherit;
+  font-style: normal;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+dl {
+  margin: 0;
+}
+
+dd {
+  margin: 0;
+  display: inline;
+}
+
+figure {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  color: inherit;
+}
+
+th {
+  font-weight: normal;
+}
+
+address {
+  font-style: inherit;
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid black;
+  table-layout: auto;
+  width: 70%;
+}
+
+th,
+td {
+  border: 1px solid gray;
+}
+
+colgroup col:first-child {
+  width: 300px;
+}
+
+/* 스크린 리더용*/
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.scroll_disable {
+  height: 100%;
+  overflow: hidden;
+}
+
+.underbar {
+  height: 1px;
+  width: 200px;
+  border-bottom: 3px solid var(--color-main);
+  margin-bottom: 2rem;
+}
