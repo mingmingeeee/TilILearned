@@ -13,14 +13,16 @@ public class UserDao {
 	public User select(Connection conn, User loginUser) throws SQLException {
 		
 		// 실행할 쿼리문 작성
-		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT id \n");
-		sql.append("FROM user \n");
-		sql.append("WHERE id = ? \n");
-		sql.append("AND pw = ? \n");
-		sql.append("AND isActive = ? \n");
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT id \n");
+		sb.append("FROM user \n");
+		sb.append("WHERE id = ? \n");
+		sb.append("AND pw = ? \n");
+		sb.append("AND isActive = ? \n");
 		
-		PreparedStatement stmt = conn.prepareStatement(sql.toString());
+		String sql = sb.toString();
+		
+		PreparedStatement stmt = conn.prepareStatement(sql);
 		
 		stmt.setString(1, loginUser.getId());
 		stmt.setString(2, loginUser.getPw());
@@ -29,16 +31,14 @@ public class UserDao {
 		ResultSet result = stmt.executeQuery();
 		
 		User user = null;
-		if(result.next()) {
+		if (result.next()) {
 			user = new User(result.getString("id"), null, null);
 		}
 		
-		DBUtil.close(result); // rs 닫고
-		DBUtil.close(stmt); // stmt 닫고
+		DBUtil.close(result);
+		DBUtil.close(stmt);
 		
 		return user;
-		
-		
 	}
 
 }

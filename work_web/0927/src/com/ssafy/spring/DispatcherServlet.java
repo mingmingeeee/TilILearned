@@ -20,35 +20,30 @@ public class DispatcherServlet extends HttpServlet {
 	
 	private BoardController boardController = new BoardController();
 	private UserController userController = new UserController();
-	private HouseDataRestController houseDataController = new HouseDataRestController();
+	private HouseDataRestController houseDataRestController = new HouseDataRestController();
 	
 	// 객체를 JSON 문자열로 변경하거나 반대로 JSON 문자열을 객체로 변경해주는 객체
 	private ObjectMapper mapper = new ObjectMapper();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("getPathInfo: " + req.getPathInfo()); // getPathInfo(): 요청이 들어온 URL에 추가되어 있는 부가적인 경로 정보를 리턴 -> "~servlet/"에 있는 ~~~
+		System.out.println("getPathInfo: " + req.getPathInfo());
 		
-		// 로그인 확인
 		SsafyInterceptor interceptor = new SsafyInterceptor();
 		boolean isPass = interceptor.preHandle(req, resp);
 		
-		String path = null; // 경로
+		String path = null;  // 경로
+		Object obj = null;  // REST 방식 응답을 위한 객체
 		
-		Object obj = null; // REST 방식 응답을 위한 객체 
-		
-		// 경로가 null값이거나 로그인해야하는 페이지인데 로그인이 되어있지 않다면 첫 페이지로 index.jsp로 이동 !!!
-		if(req.getPathInfo() == null || req.getPathInfo().equals("/") || isPass == false) { 
+		if (req.getPathInfo() == null || req.getPathInfo().equals("/") || isPass == false) {
 			path = "/index.jsp";
-			RequestDispatcher disp = req.getRequestDispatcher(path);
-			disp.forward(req, resp);
+			resp.sendRedirect(req.getContextPath() + path);
 			return;
 		}
 		
 		switch (req.getPathInfo()) {
-		
-		case "/board/regist_form": // 받은 경로가 "/board/regist_form"이라면 
-			path = "redirect:" + req.getContextPath() + "/board/regist.jsp"; // path 설정 
+		case "/board/regist_form":
+			path = "redirect:" + req.getContextPath() + "/board/regist.jsp";
 			break;
 			
 		case "/board/regist":
@@ -64,34 +59,34 @@ public class DispatcherServlet extends HttpServlet {
 			break;
 			
 		case "/user/logout":
-			path= userController.getUserLogout(req, resp);
+			path = userController.getUserLogout(req, resp);
+			break;
 			
 		case "/house/search_form":
 			path = "redirect:" + req.getContextPath() + "/house/search_form.jsp";
 			break;
 			
 		case "/rest/house/sido":
-			obj = houseDataController.getSidoNames(req, resp);
+			obj = houseDataRestController.getSidoNames(req, resp);
 			break;
 			
 		case "/rest/house/gugun":
-			obj = houseDataController.getGuGunNames(req, resp);
+			obj = houseDataRestController.getGuGunNames(req, resp);
 			break;
 			
-		case "/rest/house/dong":
-			obj = houseDataController.getDongNames(req, resp);
+		case "/rest/house/row-house/trade":  // 연립 다세대 매매 API 요청 처리
+			obj = houseDataRestController.getRowHouseTrade(req, resp);
 			break;
-		
 		}
 		
-		if (path != null && path.startsWith("redirect:")) { // path가 null값이 아니고 redirect로 시작할 때
-			resp.sendRedirect(path.split(":")[1]); // [1]로 이동 
-		} 
+		if (path != null && path.startsWith("redirect:")) {
+			resp.sendRedirect(path.split(":")[1]);
+		}
 		else if (path != null) {
 			RequestDispatcher disp = req.getRequestDispatcher(path);
 			disp.forward(req, resp);
 		}
-		else if (obj != null) { // JSON 문자열로 응답 보내기 (데이터 보내기)
+		else if (obj != null) {  // JSON 문자열로 응답 보내기
 			// 응답 헤더 작성 (Header)
 			resp.addHeader("Content-Type", "application/json; charset=UTF-8");
 			
@@ -103,7 +98,6 @@ public class DispatcherServlet extends HttpServlet {
 			PrintWriter writer = resp.getWriter();
 			writer.write(json);
 		}
-		
 	}
 	
 	@Override

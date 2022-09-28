@@ -17,7 +17,7 @@ public class User {
 		this.isActive = isActive;
 	}
 
-	// 3. getter, setter 
+	// 3. getter, setter
 	public String getId() {
 		return id;
 	}
@@ -41,6 +41,18 @@ public class User {
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
-	
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("User [id=");
+		builder.append(id);
+		builder.append(", pw=");
+		builder.append(pw);
+		builder.append(", isActive=");
+		builder.append(isActive);
+		builder.append("]");
+		return builder.toString();
+	}
 	
 }
