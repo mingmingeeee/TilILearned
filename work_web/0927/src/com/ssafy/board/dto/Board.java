@@ -77,11 +77,12 @@ public class Board {
 		builder.append(title);
 		builder.append(", content=");
 		builder.append(content);
-		builder.append(", id=");
+		builder.append(", userId=");
 		builder.append(userId);
 		builder.append(", createdAt=");
 		builder.append(createdAt);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 }

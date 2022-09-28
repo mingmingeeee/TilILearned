@@ -20,7 +20,8 @@ public class HouseDataService {
 		try {
 			conn = DBUtil.getConnection(DB_NAME);
 			map = dao.selectSidoNames(conn);
-		} finally {
+		}
+		finally {
 			DBUtil.close(conn);
 		}
 		
@@ -34,26 +35,18 @@ public class HouseDataService {
 		try {
 			conn = DBUtil.getConnection(DB_NAME);
 			map = dao.selectGuGunNames(conn, sidoCode);
-		} finally {
+		}
+		finally {
 			DBUtil.close(conn);
 		}
 		
 		return map;
 	}
 
-	public Map<String, String> getDongNames(String sidoCode, String gugunCode) throws SQLException {
-		// TODO Auto-generated method stub
-		Connection conn = null;
-		Map<String, String> map = null;
-		
-		try {
-			conn = DBUtil.getConnection(DB_NAME);
-			map = dao.selectDongames(conn, sidoCode, gugunCode);
-		} finally {
-			DBUtil.close(conn);
-		}
-		
-		return map;
+	public Map<String, Object> getRowHouseTrade(String regionCode, String dealYmd) {
+
+		Map<String, Object> response = dao.requestRowHouseTrade(regionCode, dealYmd);
+		return response;
 	}
 
 }

@@ -30,7 +30,6 @@ public class BoardController {
 			e.printStackTrace();
 			return "redirect:" + req.getContextPath() + "/error/error.jsp";
 		}
-
 	}
 	
 	public String postBoardRegist(HttpServletRequest req, HttpServletResponse resp) {
@@ -41,7 +40,7 @@ public class BoardController {
 		// 현재 로그인한 사용자의 ID를 가져와 작성자 ID로 사용한다.
 		HttpSession session = req.getSession();
 		Object obj = session.getAttribute("user");
-		if(obj != null && obj instanceof User) {
+		if (obj != null && obj instanceof User) {
 			id = ((User) obj).getId();
 		}
 
@@ -51,8 +50,8 @@ public class BoardController {
 			int cnt = service.newBoard(board);
 			
 			// request 객체에 JSP로 보낼 데이터를 실어준다.
-//			req.setAttribute("cnt", cnt);			
-			System.out.println(req.getContextPath());
+			//req.setAttribute("cnt", cnt);			
+			
 			return "redirect:" + req.getContextPath() + "/servlet/board/list";
 		}
 		catch (SQLException | BoardException e) {

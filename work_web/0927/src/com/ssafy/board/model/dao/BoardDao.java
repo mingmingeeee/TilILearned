@@ -37,7 +37,7 @@ public class BoardDao {
 
 	public Board select(Connection conn, String no) throws SQLException {
 		// 실행할 쿼리문 작성
-		String sql = "SELECT no, title, content, user_id, created_at FROM board WHERE no = ?";
+		String sql = "SELECT no, title, content, id, created_at FROM board WHERE no = ?";
 
 		// 3-1. 쿼리문을 실행할 PreparedStatement 객체를 가져옴
 		PreparedStatement stmt = conn.prepareStatement(sql);
@@ -54,7 +54,7 @@ public class BoardDao {
 			board = new Board(result.getInt("no"),
 					result.getString("title"),
 					result.getString("content"),
-					result.getString("user_id"),
+					result.getString("id"),
 					result.getTimestamp("created_at").getTime());
 		}
 
@@ -63,7 +63,7 @@ public class BoardDao {
 
 	public int insert(Connection conn, Board board) throws SQLException, BoardException {
 
-		// 실행할 쿼리문 작성 => user_id 바꿈
+		// 실행할 쿼리문 작성
 		String sql = "INSERT INTO board (title, content, user_id, created_at) VALUES (?, ?, ?, NOW())";
 
 		// 3-1. 쿼리문을 실행할 PreparedStatement 객체를 가져옴

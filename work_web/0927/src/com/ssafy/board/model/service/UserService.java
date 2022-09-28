@@ -17,7 +17,6 @@ public class UserService {
 
 	public User login(HttpServletRequest req, HttpServletResponse resp, User loginUser) throws SQLException {
 		
-		// Transaction 처리 위함
 		Connection conn = null;
 		User user = null;
 		
@@ -30,16 +29,13 @@ public class UserService {
 				// 로그인 정보를 세션에 저장
 				HttpSession session = req.getSession();
 				session.setAttribute("user", user);
-			} 
-			
-		}  finally {
-			DBUtil.close(conn); // conn 닫기 
+			}
+		}
+		finally {
+			DBUtil.close(conn);
 		}
 		
 		return user;
-		
 	}
-	
-	
 
 }
