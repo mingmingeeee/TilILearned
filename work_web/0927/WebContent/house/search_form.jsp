@@ -70,6 +70,7 @@
 			})
 			.then((response) => response.json())
 			.then((data) => {
+				console.log(data);
 				let houses = data.response.body.items.item;
 				houses.forEach(function (house) {
 					console.log(house.거래금액);
