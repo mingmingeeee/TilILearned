@@ -17,7 +17,7 @@ public class DP3_BinomicalCoefTest {
 			int end = Math.min(i, K);
 			for (int j = 0; j <= end; j++) {
 				if (j == 0 || j == i) {
-					B[i][j] = 1; // 아무것도 안 봅거나 전부 뽑거나의 경우는 1
+					B[i][j] = 1; // 아무것도 안 뽑거나 전부 뽑거나의 경우는 1
 				} else {
 					B[i][j] = B[i - 1][j - 1] + B[i - 1][j];
 				}
