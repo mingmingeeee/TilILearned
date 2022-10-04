@@ -10,31 +10,23 @@ public class B_2579 {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
 
-		String[] split = in.readLine().split(" ");
+		int N = Integer.parseInt(in.readLine());
 
-		int N = Integer.parseInt(split[0]);
-		int K = Integer.parseInt(split[1]);
-
-		int[] w = new int[N + 1];
-		int[] v = new int[N + 1];
-
+		int[] dp = new int[N + 1];
+		int[] stairs = new int[N + 1];
 		for (int i = 1; i <= N; i++) {
-			split = in.readLine().split(" ");
-			w[i] = Integer.parseInt(split[0]);
-			v[i] = Integer.parseInt(split[1]);
+			stairs[i] = Integer.parseInt(in.readLine());
 		}
-		
-		int[] dp = new int[K + 1];
 
-		for (int i = 1; i <= N; i++) {
-			for (int j = K; j >= 1; j--) {
-				if(w[i] <= j) {
-					dp[j] = Math.max(dp[j - w[i]] + v[i], dp[j]);
-				}
-			}
+		dp[1] = stairs[1];
+		if (N >= 2)
+			dp[2] = dp[1] + stairs[2];
+
+		for (int i = 3; i <= N; i++) {
+			dp[i] = Math.max(dp[i - 3] + stairs[i - 1] + stairs[i], dp[i - 2] + stairs[i]);
 		}
-		
-		System.out.println(dp[K]);
+
+		System.out.println(dp[N]);
 
 	}
 
