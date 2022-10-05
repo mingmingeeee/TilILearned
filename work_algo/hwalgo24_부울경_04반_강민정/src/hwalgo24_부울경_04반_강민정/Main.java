@@ -55,8 +55,12 @@ public class Main {
 	}
 
 	private static void start(int cnt) {
+		
+		if(isAvailable)
+			return;
 
 		if (cnt == list.size()) { // 다 채웠으면
+			isAvailable = true; // true
 			for(int i=0; i<9; i++) {
 				for(int j=0; j<9; j++) {
 					sb.append(sdoku[i][j]);
