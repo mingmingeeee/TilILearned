@@ -1,0 +1,4 @@
+/board=com.ssafy.board.controller.BoardController
+/user=com.ssafy.board.controller.UserController
+/house=com.ssafy.board.controller.HouseDataRestController
+/rest/house=com.ssafy.board.controller.HouseDataRestController
