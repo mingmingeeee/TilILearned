@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<!-- <resources mapping="/resources/**" location="/resources/" /> -->
+	<!-- <resources mapping="/img/**" location="/resources/img/" />
+	<resources mapping="/css/**" location="/resources/css/" />
+	<resources mapping="/js/**" location="/resources/js/" /> -->
+	<resources mapping="/assets/**" location="/resources/assets/" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<context:component-scan base-package="com.ssafy.*.controller" />
+	
+	<!-- interceptor setting -->
+	<!-- interceptor를 관리하는 클래스를 알려줘야 함 => 그래서 이 클래스의 객체 생성 -->
+	<beans:bean id="confirmInterceptor" class="com.ssafy.interceptor.ConfirmInterceptor"/>
+	
+	<!--  어떤 주소는 interceptor 거치라는 의미 !!! => 밑에 path들 오게 되면 interceptor 거쳐라~ -->
+	<interceptors>
+		<interceptor>
+			<!-- <mapping path="/board/*"/> 
+			<exclude-mapping path="/board/list/"> -->
+			<mapping path="/board/write"/>
+			<mapping path="/board/view"/>
+			<mapping path="/board/modify"/>
+			<mapping path="/board/delete"/>
+			
+			<beans:ref bean="confirmInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
+	<!-- fileUpload -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding" value="UTF-8"/>
+		<beans:property name="maxUploadSize" value="52428800"/> 
+		<beans:property name="maxInMemorySize" value="1048576"/> 
+	</beans:bean>
+
+	<!-- fileDownload -->
+	<!-- com.ssafy.board.view.FileDownLoadView의 id를 fileDownLoadView로! 
+		그래서 fileDownLoadView를 만나는 순간, 이거를 view로 쓰겠다는 말임 -->
+	<beans:bean id="fileDownLoadView" class="com.ssafy.board.view.FileDownLoadView"/>
+	<beans:bean id="fileViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0" /> <!-- 0순위라는 의미. 원래 사용했던 Resolver보다 먼저 찾음 -->
+	</beans:bean> 
+	
+</beans:beans>
