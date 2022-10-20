@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace: 패키지명 -->
+<mapper namespace="com.ssafy.member.model.dao.MemberDao">
+
+	<!-- member라는 이름으로 memberDto를 관리할 수 있는 map 만들기 -->
+	<resultMap type="memberDto" id="member">
+		<result column="user_id" property="userId" />
+		<result column="user_name" property="userName" />
+		<result column="user_password" property="userPwd" />
+		<result column="email_id" property="emailId" />
+		<result column="email_domain" property="emailDomain" />
+		<result column="join_date" property="joinDate" />
+	</resultMap>
+
+	<!-- parameterType: 인자값, resultType: 결과값 -->
+	<!-- id: method와 일치 -->
+	<select id="idCheck" parameterType="string" resultType="int">
+		select count(user_id)
+		from members
+		where user_id = #{userId}
+		<!-- 인자 값 하나면 아무거나 쓸 수도 있는데... 그러면 안 되징! -->
+	</select>
+
+	<insert id="joinMember" parameterType="memberDto">
+		<!-- property작성하기! => getter -->
+		<!-- db 컬럼과 memberDto 알리아스안맞아서 생기는 일 => resultMap으로 해결 -->
+		insert into members
+		(user_name, user_id, user_password,
+		email_id, email_domain, join_date)
+		values (#{userName}, #{userId},
+		#{userPwd},
+		#{emailId}, #{emailDomain}, now())
+	</insert>
+
+	<!-- Dto랑 컬럼의 타입이 같으면 resultType쓰면 됨 resutMap: 얻어온 거를 매칭시켜서 리턴시키겠다 -->
+	<select id="loginMember" parameterType="map" resultMap="member">
+		<!-- alias 쓰면 됨 => dto에 같은 이름이 없으니까... OR resultMap 만들기 -->
+		select user_id, user_name
+		from members
+		where user_id = #{userid} and user_password = #{userpwd}
+	</select>
+
+</mapper>

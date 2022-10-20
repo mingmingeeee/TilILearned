@@ -23,7 +23,7 @@ public class BoardController {
 		
 		BoardService boardService = context.getBean(BoardService.class);
 		BoardDto boardDto = new BoardDto();
-		boardDto.setUserId("ssafy");
+		boardDto.setUserId("mingming");
 		System.out.print("제목 : ");
 		boardDto.setSubject(in.readLine());
 		System.out.print("내용 : ");
