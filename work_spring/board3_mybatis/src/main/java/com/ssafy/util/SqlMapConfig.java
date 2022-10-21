@@ -14,7 +14,7 @@ public class SqlMapConfig {
 
 	static {
 		try {
-			String resource = "mapper/mybatis-config.xml";
+			String resource = "mapper/mybatis-config.xml"; // myBatis 관련된 건 다 이 파일 참조하겠다!
 			Reader reader = Resources.getResourceAsReader(resource);
 			factory = new SqlSessionFactoryBuilder().build(reader);
 		} catch (IOException e) {
