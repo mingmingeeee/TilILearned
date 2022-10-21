@@ -6,6 +6,7 @@
 <mapper namespace="com.ssafy.member.model.dao.MemberDao">
 
 	<!-- member라는 이름으로 memberDto를 관리할 수 있는 map 만들기 -->
+	<!-- DB <-> Java 객체 연결된 정보 (Setter) -->
 	<resultMap type="memberDto" id="member">
 		<result column="user_id" property="userId" />
 		<result column="user_name" property="userName" />
@@ -24,6 +25,9 @@
 		<!-- 인자 값 하나면 아무거나 쓸 수도 있는데... 그러면 안 되징! -->
 	</select>
 
+	<!-- com.ssafy.board.model.BoardDto => memberDto -->
+	<!-- ${} 안 쓰고 #{}쓰는 이유: 보안에 취약함 -->
+	<!-- Setter 이름으로 setting -->
 	<insert id="joinMember" parameterType="memberDto">
 		<!-- property작성하기! => getter -->
 		<!-- db 컬럼과 memberDto 알리아스안맞아서 생기는 일 => resultMap으로 해결 -->

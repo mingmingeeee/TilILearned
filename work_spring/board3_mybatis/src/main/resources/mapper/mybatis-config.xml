@@ -3,10 +3,12 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
+<!-- tag 작성하는 순서가 있음 -->
 <configuration>
 
-	<properties resource="mapper/dbinfo.properties"/>
+	<properties resource="mapper/dbinfo.properties"/> <!-- db 설정에 관한 값들 => db 설정 -->
 
+	<!-- 별칭 지어주기 -->
 	<typeAliases>
 		<typeAlias type="com.ssafy.board.model.BoardDto" alias="boardDto" />
 		<typeAlias type="com.ssafy.board.model.FileInfoDto" alias="fileInfoDto" />
@@ -14,6 +16,7 @@
 	</typeAliases>
 	
 	<!-- DB 연결 -->
+	<!-- properties 읽어와서 설정 -->
 	<environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
@@ -36,9 +39,10 @@
     </environments>-->
     
     <!-- 밑 파일들에 SQL문 작성 -->
+    <!-- mapper file 경로 설정 -->
     <mappers>
 		<mapper resource="mapper/member.xml" />
-		<!-- <mapper resource="mapper/board.xml" /> -->
+		<mapper resource="mapper/board.xml" />
 	</mappers>
 	
 </configuration>

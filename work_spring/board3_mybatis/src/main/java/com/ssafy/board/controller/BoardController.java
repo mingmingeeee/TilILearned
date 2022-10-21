@@ -49,7 +49,7 @@ public class BoardController {
 	}
 
 	@GetMapping("/write")
-	public String write(@RequestParam Map<String, String> map, Model model) {
+	public String write(Map<String, String> map, Model model) {
 		logger.debug("write call parameter {}", map);
 		model.addAttribute("pgno", map.get("pgno"));
 		model.addAttribute("key", map.get("key"));

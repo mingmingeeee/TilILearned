@@ -133,6 +133,9 @@ public class BoardController {
 	
 	@PostMapping("/modify")
 	public String modify(BoardDto boardDto, @RequestParam Map<String, String> map, RedirectAttributes redirectAttributes) throws Exception {
+		
+		
+		
 		logger.debug("modify boardDto : {}", boardDto);
 		boardService.modifyArticle(boardDto);
 		redirectAttributes.addAttribute("pgno", map.get("pgno"));
