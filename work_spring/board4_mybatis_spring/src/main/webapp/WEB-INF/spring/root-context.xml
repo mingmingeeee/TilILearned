@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<context:component-scan base-package="com.ssafy.util, com.ssafy.*.model, com.ssafy.board.aop" />
+	
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
+	<!-- <bean id="ds" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/ssafyweb?serverTimezone=UTC&amp;useUniCode=yes&amp;characterEncoding=UTF-8"/>
+		<property name="username" value="ssafy"/>
+		<property name="password" value="ssafy"/>
+	</bean> -->
+	
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/ssafy"></property>
+	</bean>
+	
+	<!-- sqlMapconfig.java -->
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+	
+		<!-- mybatis-config.xml -->
+		<!-- 연결 정보 DI(주입) -->
+		<property name="dataSource" ref="dataSource"></property>
+	
+	 	<!-- 알아서 property의 이름이 됨 -->	
+		<property name="typeAliasesPackage" value="com.ssafy.*.model"></property>
+		
+		<!-- 모~든 xml 읽어들여라! -->
+		<property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+		
+		<!-- 설정 파일 DI(주입) => classpath: src기준 경로 -->
+<!-- 		<property name="configLocation" value="classpath:mapper/mybatis-config.xml"></property> 
+		
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:mapper/member.xml</value>
+				<value>classpath:mapper/board.xml</value>
+			</list>
+		</property> -->
+	</bean>
+	
+	<!-- sqlSession => 생성자의 인자값으로 sqlSessionFactoryBean가져가야 함 -->
+<!-- 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref = "sqlSessionFactoryBean"></constructor-arg>
+	</bean> -->
+	
+	<!-- mybatis야~니가쓰려고하는 mapper들이 여기에이쏘~하고 알려줌 -->
+	<mybatis-spring:scan base-package="com.ssafy.*.model.mapper"/>
+	
+	<!-- transaction 처리: 하나라도 안 되면 다 안 되게 하는 법 => exception 나면 rollback해라~해야 함 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- annotaion으로 관리할거야 라는 의미 -->
+	<!-- => transaction매니저로 이거 쓸거야~라는 의미. 어노테이션으로 할거야~라고 알려주는 것 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+</beans>
