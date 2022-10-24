@@ -2,104 +2,117 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!-- resultMap을 viewArticle로 선언하면 연결 된거 차례대로 쭉쭉 -->
+<!-- ​<insert id="writeArticle" parameterType="boardDto"useGeneratedKeys="true" keyProperty="articleNo"> -->
+
 <mapper namespace="com.ssafy.board.model.dao.BoardDao">
 
-	<resultMap type="boardDto" id="board">
-		<result column="article_no" property="articleNo" />
-		<result column="user_id" property="userId" />
-		<result column="subject" property="subject" />
-		<result column="content" property="content" />
-		<result column="hit" property="hit" />
-		<result column="register_time" property="registerTime" />
-		<result column="user_name" property="userName" />
+	<resultMap type="boardDto" id="article">
+		<result column="article_no" property="articleNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+		<result column="subject" property="subject"/>
+		<result column="content" property="content"/>
+		<result column="hit" property="hit"/>
+		<result column="register_time" property="registerTime"/>
 	</resultMap>
-
-	<resultMap type="FileinfoDto" id="file">
-		<result column="save_folder" property="saveFolder" />
-		<result column="original_file" property="originalFile" />
-		<result column="save_file" property="saveFile" />
+	
+	<!-- extends: 상속받은 것과 같다고 생각하면 됨 => article(boardDto)상속받아 이용 -->
+	<!-- 원 boardDto 구성과 똑같음 (fileInfos 또한) -->
+	<resultMap type="boardDto" id="viewArticle" extends="article">
+	<!-- 상속받는 내용: -->
+<!-- 	<result column="article_no" property="articleNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+		<result column="subject" property="subject"/>
+		<result column="content" property="content"/>
+		<result column="hit" property="hit"/>
+		<result column="register_time" property="registerTime"/> -->
+		
+		<!-- 어떤 column기준으로 collection이 구성되는지도 중요함 -->
+		<!-- 여기의 경우, 글 번호 기준으로 묶어야 하니 article_no로 묶어야 한다는 얘기 -->
+		<collection property="fileInfos" column="article_no" javaType="list" ofType="fileInfoDto" select="fileInfoList"/>
+		<!-- ofType: list에 있는 객체의 타입 -->
+		<!-- == List<FileInfoDto> -->
+		<!-- 얘를 관리하는 Dto의 property는 fileInfos!! <= 여기에 집어넣을거얌~ -->
+		
+		<!-- 내가 얻어올 거는 집합인데 list<fileInfoDto>형태로 얻어올거야 얻어온 거를 boardDto.getFileInfos할거야. 얻어올려면 article_no이 있어야 하고 select문장은 id=fildInfoList에 있어! -->
+	</resultMap>
+	<!-- 이게 쌓여서 결국엔 Dto로 return됨 -->
+	
+	<resultMap type="fileInfoDto" id="file">
+		<result column="save_folder" property="saveFolder"/>
+		<result column="original_file" property="originalFile"/>
+		<result column="save_file" property="saveFile"/>
 	</resultMap>
 
 	<insert id="writeArticle" parameterType="boardDto">
-		insert into board
-		(user_id, subject, content, hit, register_time)
-		values (#{userId},
-		#{subject}, #{content}, 0, now())
+		insert into board (user_id, subject, content, hit, register_time)
+		values (#{userId}, #{subject}, #{content}, 0, now())
+		<!-- keyProperty: setter뜻하는 것 -->
+		<selectKey resultType="int" keyProperty="articleNo" order="AFTER">
+			select last_insert_id() <!-- MySQL 내장 함수 -->
+		</selectKey>
 	</insert>
 	
-	<select id="getLastNo" parameterType="int" resultType="int">
-		select last_insert_id()
-	</select>
-	
-	<insert id="uploadFiles" parameterType="map">
+	<insert id="registerFile" parameterType="boardDto">
 		insert into file_info (article_no, save_folder, original_file, save_file)
 		values
-		<foreach item="file" index="index" collection="list">
-			(#{articleNo}, #{file.saveFolder}, #{file.originalFile}, #{file.saveFile})
-			<if test="index lt list.size - 1">
-				,
-			</if>
+		<!-- boardDto의 property "fileinfos"를 뜻함 => 여기 있는 내용을 하나씩 불러와서 쓰는 것임 -->
+		<!-- getFileinfos -->
+		<!-- 만들어질 때마다 separator "," 쓸거양! => 마지막에서는 자동으로 안 붙음 -->
+		<foreach collection="fileInfos" item="fileinfo" separator=" , ">
+			(#{articleNo}, #{fileinfo.saveFolder}, #{fileinfo.originalFile}, #{fileinfo.saveFile})
 		</foreach>
 	</insert>
-	
+
 	<sql id="search">
 		<if test="word != null and word != ''">
 			<if test="key == 'subject'">
-				and 
-				<if test="start != null">
-					b.
-				</if>
-				subject like concat('%', #{word}, '%')
+				and subject like concat('%', #{word}, '%')
 			</if>
 			<if test="key != 'subject'">
-				and 
-				<if test="start != null">
-					b.
-				</if>
-				user_id = #{word}
+				and ${key} = #{word}
 			</if>
 		</if>
 	</sql>
 
-	<select id="listArticle" parameterType="map" resultMap="board">
-		select
-		b.article_no, b.user_id, b.subject, b.content, b.hit,
-		b.register_time,
-		m.user_name
-		from board b, members m
-		where b.user_id =
-		m.user_id
-		<include refid="search"></include>
+	<select id="listArticle" parameterType="map" resultMap="article">
+		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name
+		from board b, members m 
+		where b.user_id = m.user_id
+		<include refid="search"></include> <!-- refid: 참조하는 id -->
 		order by b.article_no desc
 		limit #{start}, #{listsize}
 	</select>
-
-	<select id="getTotalArticleCount" parameterType="map"
-		resultType="int">
+	
+	<select id="getTotalArticleCount" parameterType="map" resultType="int">
 		select count(article_no)
 		from board
 		<where>
 			<include refid="search"></include>
 		</where>
 	</select>
-	
-	<select id="getArticle" parameterType="int" resultMap="board">
+
+	<select id="getArticle" parameterType="int" resultMap="viewArticle">
 		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name 
 		from board b, members m
 		where b.user_id = m.user_id
-		and b.article_no = #{articleNo};
+		and b.article_no = #{articleNo}
+		<!-- 글 정보를 얻어왔는데 viewArticle에 갔더니 collection으로 뭘 얻어오래 => fileInfoList에 가서 -->
 	</select>
 	
-	<select id="getFileInfos" parameterType="int" resultMap="file">
+	<select id="fileInfoList" resultMap="file">
 		select save_folder, original_file, save_file
 		from file_info
 		where article_no = #{articleNo}
+		<!-- save_folder, 등등을 Dto로 만들어놔서 매핑하도록 해놓음  -->
 	</select>
 	
 	<update id="updateHit" parameterType="int">
 		update board
 		set hit = hit + 1
-		where article_no = #{updateHit}
+		where article_no = #{articleNo}
 	</update>
 	
 	<update id="modifyArticle" parameterType="boardDto">
@@ -108,14 +121,14 @@
 		where article_no = #{articleNo}
 	</update>
 	
-	<delete id="deleteArticle">
-		delete from board
-		where article_no = #{articleNo}
-	</delete>
-	
-	<delete id="deleteFile">
+	<delete id="deleteFile" parameterType="int">
 		delete from file_info
 		where article_no = #{articleNo}
 	</delete>
 	
+	<delete id="deleteArticle" parameterType="int">
+		delete from board
+		where article_no = #{articleNo}
+	</delete>
+
 </mapper>
