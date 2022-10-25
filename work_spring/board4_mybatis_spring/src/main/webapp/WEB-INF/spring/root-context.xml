@@ -56,7 +56,7 @@
 		<constructor-arg ref = "sqlSessionFactoryBean"></constructor-arg>
 	</bean> -->
 	
-	<!-- mybatis야~니가쓰려고하는 mapper들이 여기에이쏘~하고 알려줌 -->
+	<!-- mybatis야~니가쓰려고하는 mapper들이 여기에이쏘~하고 알려줌 => @Mapper 안 해줘도 됨 -->
 	<mybatis-spring:scan base-package="com.ssafy.*.model.mapper"/>
 	
 	<!-- transaction 처리: 하나라도 안 되면 다 안 되게 하는 법 => exception 나면 rollback해라~해야 함 -->

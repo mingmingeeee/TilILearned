@@ -1,5 +1,6 @@
 package com.ssafy.board.model.service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,9 +107,20 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	@Transactional 
-	public void deleteArticle(int articleNo) throws Exception {
+	public void deleteArticle(int articleNo, String path) throws Exception {
+		// 실제 파일 삭제 위해 리스트 가져오기
+		List<FileInfoDto> fileList = boardMapper.fileInfoList(articleNo);
+		
+		// db에서 삭제
 		boardMapper.deleteFile(articleNo);
 		boardMapper.deleteArticle(articleNo);
+		
+		// 실제 폴더에 저장된 파일들 삭제
+		for (FileInfoDto fileInfoDto : fileList) {
+									// 최상위 경로 풀 네임 \ 날짜\save_file_name => 처음 생설할 때  saveFolder에 date넣어놨었음
+			File file = new File(path + File.separator + fileInfoDto.getSaveFolder() + File.separator + fileInfoDto.getSaveFile());
+			file.delete();
+		}
 	}
 
 }
