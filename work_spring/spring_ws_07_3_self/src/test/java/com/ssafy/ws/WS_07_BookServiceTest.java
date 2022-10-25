@@ -15,19 +15,10 @@ import com.ssafy.ws.model.dto.Book;
 import com.ssafy.ws.model.dto.SearchCondition;
 import com.ssafy.ws.model.service.BookService;
 
-/*
- * 현재 아래의 Test들은 WS_06_DaoTest가 모두 통과되었다는 가정 하에 진행되는 테스트 코드이다.
- * 정확하게 Service 단위의 테스트를 진행하기 위해서는 Mockup을 활용해야 한다.
- * 
- * ==> 만약 이 단위 test가 [ service + dao ]에 관한 것이었다면 상관 없지만 (dao가 껴있기 때문에)
- * 보통은 service, dao 따로 따로 단위 테스트를 한다. 
- * 보통은 service 테스트를 위해 testDao(항상 true를 주는)를 만들어서 service를 테스트한다. => Mock up
- */
-public class WS_07_BookServiceTest extends AbstractTest {
+public class WS_07_BookServiceTest extends AbstractTest{
 	
 	private static final Logger logger = LoggerFactory.getLogger(WS_07_BookServiceTest.class);
 	
-	// 픽스처
 	@Autowired
 	private BookService bookService;
 	
@@ -44,7 +35,8 @@ public class WS_07_BookServiceTest extends AbstractTest {
 		this.book3 = new Book("111-333-4444", "장길산", "책제목3", 30000, "좋은 책 3", null, "abc3.png");
 		
 	}
-	
+
+
 	@Test
 	public void addAndGet() {  // 추가, 조회 테스트
 		
@@ -145,4 +137,5 @@ public class WS_07_BookServiceTest extends AbstractTest {
 		List<Book> books = bookService.search(new SearchCondition());
 		assertEquals(3, books.size());
 	}
+
 }
