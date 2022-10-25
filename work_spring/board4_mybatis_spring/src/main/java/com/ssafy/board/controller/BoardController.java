@@ -161,7 +161,7 @@ public class BoardController {
 	public String delete(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map,
 			RedirectAttributes redirectAttributes) throws Exception {
 		logger.debug("delete articleNo : {}", articleNo);
-		boardService.deleteArticle(articleNo);
+		boardService.deleteArticle(articleNo, servletContext.getRealPath("/upload"));
 		redirectAttributes.addAttribute("pgno", map.get("pgno"));
 		redirectAttributes.addAttribute("key", map.get("key"));
 		redirectAttributes.addAttribute("word", map.get("word"));
