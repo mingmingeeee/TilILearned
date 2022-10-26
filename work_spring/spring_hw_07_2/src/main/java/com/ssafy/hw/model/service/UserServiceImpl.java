@@ -10,12 +10,12 @@ import com.ssafy.hw.model.dao.UserDao;
 import com.ssafy.hw.model.dto.SearchCondition;
 import com.ssafy.hw.model.dto.User;
 
-//______________
+@Service
 public class UserServiceImpl implements UserService {
 
 	private UserDao userDao;
 
-	// ___________
+	@Autowired
 	public void setUserRepo(UserDao userDao) {
 		this.userDao = userDao;
 	}
@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	// _________ 무결성을 위한 애노테이션
+	@Transactional
 	public int insert(User user) {
 		/*
 		 * // 사용자 정보를 등록한다. userDao.insert(user); // 고의로 예외를 발생시키는 코드를 삽입한다. // 트랜잭션

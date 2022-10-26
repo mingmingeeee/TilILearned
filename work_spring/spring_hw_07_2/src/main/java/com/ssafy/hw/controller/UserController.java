@@ -26,11 +26,11 @@ import com.ssafy.hw.model.service.UserService;
 public class UserController {
 
 	// resource 경로를 가져오기위해 ResourcesLoader를 주입받는다.
-	// ___________
+	@Autowired
 	ResourceLoader resLoader;
 
 	// User 관련 기능을 사용하기위해 UserService를 주입받는다.
-	// ___________
+	@Autowired
 	UserService service;
 
 	/**
@@ -80,7 +80,7 @@ public class UserController {
 
 		}
 		// DB에 user 정보 등록
-		// ____________
+		service.insert(user);
 
 		return "/regist_result";
 	}
