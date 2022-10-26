@@ -1,5 +1,6 @@
 package com.ssafy.ws.model.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.ssafy.ws.model.dto.Book;
@@ -7,7 +8,7 @@ import com.ssafy.ws.model.dto.SearchCondition;
 
 public interface BookService {
 	
-	int insert(Book book);
+	int insert(Book book) throws IllegalStateException, IOException;
 	
 	int update(Book book);
 	

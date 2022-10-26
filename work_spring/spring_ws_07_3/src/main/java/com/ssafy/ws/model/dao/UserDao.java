@@ -9,5 +9,9 @@ public interface UserDao {
 	void deleteAll();
 
 	int getCount();
+
+	int insert(User user);
+
+	User login(User user);
 	
 }

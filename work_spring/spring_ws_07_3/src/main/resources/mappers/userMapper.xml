@@ -14,16 +14,24 @@
 		FROM user
 	</select>
 	
+	<!-- 사용자 조회 -->
 	<select id="select" parameterType="string" resultType="user">
 		SELECT id, name, pass, rec_id
 		FROM user
 		WHERE id = #{id}
 	</select>
 
+	<!-- 사용자 추가 -->
 	<insert id="insert" parameterType="user">
 		INSERT INTO user (id, name, pass, rec_id) VALUES
 		(#{id}, #{name}, #{pass}, #{recId})
 	</insert>
-
+	
+	<!-- 로그인 처리 -->
+	<select id="login" parameterType="user" resultType="user">
+		SELECT id, name, rec_id
+		FROM user
+		WHERE id = #{id} AND pass = #{pass}
+	</select>
 
 </mapper>

@@ -3,6 +3,7 @@ package com.ssafy.ws;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.Before;
@@ -46,7 +47,7 @@ public class WS_07_BookServiceTest extends AbstractTest {
 	}
 	
 	@Test
-	public void addAndGet() {  // 추가, 조회 테스트
+	public void addAndGet() throws IllegalStateException, IOException {  // 추가, 조회 테스트
 		
 		bookService.deleteAll();
 		assertEquals(0, bookService.getCount());
@@ -73,7 +74,7 @@ public class WS_07_BookServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void count() {  // count 메서드(추가예정) 테스트 
+	public void count() throws IllegalStateException, IOException {  // count 메서드(추가예정) 테스트 
 		
 		bookService.deleteAll();
 		assertEquals(0, bookService.getCount());
@@ -89,7 +90,7 @@ public class WS_07_BookServiceTest extends AbstractTest {
 	}
 	
 	@Test
-	public void addAndUpdate() {  // 추가, 수정 테스트
+	public void addAndUpdate() throws IllegalStateException, IOException {  // 추가, 수정 테스트
 		
 		bookService.deleteAll();
 		assertEquals(0, bookService.getCount());
@@ -112,7 +113,7 @@ public class WS_07_BookServiceTest extends AbstractTest {
 	}
 	
 	@Test
-	public void addAndDelete() {  // 추가, 삭제 테스트
+	public void addAndDelete() throws IllegalStateException, IOException {  // 추가, 삭제 테스트
 		
 		bookService.deleteAll();
 		assertEquals(0, bookService.getCount());
@@ -130,7 +131,7 @@ public class WS_07_BookServiceTest extends AbstractTest {
 	}
 	
 	@Test
-	public void selectAll() {  // 모든 도서 조회 테스트
+	public void selectAll() throws IllegalStateException, IOException {  // 모든 도서 조회 테스트
 		
 		bookService.deleteAll();
 		assertEquals(0, bookService.getCount());
