@@ -1,5 +1,7 @@
 package com.ssafy.ws;
 
+import java.io.IOException;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,7 +14,7 @@ public class WS_02_AOPTest extends AbstractTest {
 	private BookService bookService;
 	
 	@Test
-	public void testInsert() {
+	public void testInsert() throws IllegalStateException, IOException {
 		bookService.insert(null);
 		bookService.select("111-222-3333");
 		bookService.search(new SearchCondition());

@@ -38,9 +38,14 @@ public class WS_06_UserDaoTest extends AbstractTest {
 		
 		// 1. 사용자 추가 테스트
 		assertEquals(1, userDao.insert(user1));
+		assertEquals(1, userDao.getCount());
 		
 		// 2. 사용자 조회 테스트
-		assertNotNull(userDao.select(user1.getId()));
+		User userget1 = userDao.select(user1.getId());
+		assertEquals(user1.getId(), userget1.getId());
+		assertEquals(user1.getName(), userget1.getName());
+		assertEquals(user1.getPass(), userget1.getPass());
+		assertEquals(user1.getRecId(), userget1.getRecId());
 		
 	}
 }
