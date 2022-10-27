@@ -55,9 +55,7 @@
                     name="word"
                     placeholder="검색어..."
                   />
-                  <button id="btn-search" class="btn btn-dark" type="button">
-                    검색
-                  </button>
+                  <button id="btn-search" class="btn btn-dark" type="button">검색</button>
                 </div>
               </form>
             </div>
@@ -112,31 +110,16 @@
           <div class="modal-body">
             <div class="mb-3">
               <label for="username" class="form-label">이름 : </label>
-              <input
-                type="text"
-                class="form-control"
-                id="username"
-                placeholder="이름..."
-              />
+              <input type="text" class="form-control" id="username" placeholder="이름..." />
             </div>
             <div class="mb-3">
               <label for="userid" class="form-label">아이디 : </label>
-              <input
-                type="text"
-                class="form-control"
-                id="userid"
-                placeholder="아이디..."
-              />
+              <input type="text" class="form-control" id="userid" placeholder="아이디..." />
             </div>
             <div id="idcheck-result"></div>
             <div class="mb-3">
               <label for="userpwd" class="form-label">비밀번호 : </label>
-              <input
-                type="password"
-                class="form-control"
-                id="userpwd"
-                placeholder="비밀번호..."
-              />
+              <input type="password" class="form-control" id="userpwd" placeholder="비밀번호..." />
             </div>
             <div class="mb-3">
               <label for="pwdcheck" class="form-label">비밀번호확인 : </label>
@@ -150,18 +133,9 @@
             <div class="mb-3">
               <label for="emailid" class="form-label">이메일 : </label>
               <div class="input-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="emailid"
-                  placeholder="이메일아이디"
-                />
+                <input type="text" class="form-control" id="emailid" placeholder="이메일아이디" />
                 <span class="input-group-text">@</span>
-                <select
-                  class="form-select"
-                  id="emaildomain"
-                  aria-label="이메일 도메인 선택"
-                >
+                <select class="form-select" id="emaildomain" aria-label="이메일 도메인 선택">
                   <option selected>선택</option>
                   <option value="ssafy.com">싸피</option>
                   <option value="google.com">구글</option>
@@ -180,11 +154,7 @@
             >
               회원가입
             </button>
-            <button
-              type="button"
-              class="btn btn-outline-danger"
-              data-bs-dismiss="modal"
-            >
+            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
               닫기
             </button>
           </div>
@@ -261,59 +231,87 @@
     <script>
       let root = "/board";
 
+      // /user까진 같지만 뒤에 더 붙는 url => 다른 주소임
+
+      // javascript의 root = board 가져온 거임
+      // admin이라는 이름의 controller 만들 거임
+      // admin/user: admin이 user관리한다는 의미
+      // Collection/Document
+
+      // response => response.json 을 then으로 넘겨줌
+      // jackson이 없으면 정상적인 json이 안 넘어가고 "list"가 넘어가게 됨
       // 회원 목록
       fetch(`${root}/admin/user`)
         .then((response) => response.json())
         .then((data) => makeList(data));
 
       // 회원 등록
-      document
-        .querySelector("#btn-join")
-        .addEventListener("click", function () {
-          let registerInfo = {
-            userId: document.querySelector("#userid").value,
-            userName: document.querySelector("#username").value,
-            userPwd: document.querySelector("#userpwd").value,
-            emailId: document.querySelector("#emailid").value,
-            emailDomain: document.querySelector("#emaildomain").value,
-          };
+      // btn-join에 event등록할건데 click event ~~~ => 여기에 callback함수 등록할거양~~
+      // get방식, post방식, ... => 주소가 달라도 판별이 되는 이유
+      document.querySelector("#btn-join").addEventListener("click", function () {
+        let registerInfo = {
+          userId: document.querySelector("#userid").value,
+          userName: document.querySelector("#username").value,
+          userPwd: document.querySelector("#userpwd").value,
+          emailId: document.querySelector("#emailid").value,
+          emailDomain: document.querySelector("#emaildomain").value,
+        };
 
-          let config = {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(registerInfo),
-          };
+        let config = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(registerInfo), // stringifty: JSON의 문자열로 보내야 함 => 직렬화해서 보냄!
+        };
+        // 역직렬화: parse 근데 이 역할을 response.json()이 해주고 있기 때문에 별도로 하지 않음
+        fetch(`${root}/admin/user`, config)
+          .then((response) => response.json())
+          .then((data) => makeList(data));
+      });
 
-          fetch(`${root}/admin/user`, config)
-            .then((response) => response.json())
-            .then((data) => makeList(data));
-        });
+      //    query문 http Method
+      // C: Insert - Post
+      // R: Select - GET
+      // U: update - PUT
+      // D: delete - DELETE
 
-      // 회원 수정 열기
+      // 회원 상세 정보
+      function userView(el) {
+        var modal = new bootstrap.Modal(document.getElementById("userViewModal"), {
+          backdrop: false,
+          keyboard: false,
+        }); // 모달 창 띄우기, 뒤에가 뿌옇게~, esc 눌러도 안 됨~
+        let id = el.getAttribute("data-id");
+
+        fetch(`${root}/admin/user/${id}`)
+          .then((response) => response.json())
+          .then((data) => {
+            document.querySelector("#vid").innerText = data.userId;
+            document.querySelector("#vname").innerText = data.userName;
+            document.querySelector("#vemail").innerText = data.emailId;
+            document.querySelector("#vjoindate").innerText = data.joinDate;
+            modal.show();
+          });
+      }
+
+      // 수정 페이지 보기
       function viewModify(el) {
+        // 수정 버튼 누르면 이 메서드로 옴
         let id = el.parentNode.parentNode.getAttribute("data-id");
-
-        document
-          .querySelector(`#view_${id}`)
-          .setAttribute("style", "display : none;");
-        document
-          .querySelector(`#mview_${id}`)
-          .setAttribute("style", "display : ;");
+        document.querySelector(`#view_${id}`).setAttribute("style", "display: none;"); // view로 시작하는 건 안 보이게!!!
+        document.querySelector(`#mview_${id}`).setAttribute("style", "display: ;"); // mview는 보이게!!
+        //console.log(el.parentNode.parentNode.getAttribute("data-id")); // td의 부모인 tr 얻을 수 있음..
       }
 
-      // 회원 수정 취소
+      // 수정 페이지 닫기
       function closeModify(el) {
+        // 취소 버튼 누르면 이 메서드로 옴
         let id = el.parentNode.parentNode.getAttribute("data-id");
-
-        document
-          .querySelector(`#view_${id}`)
-          .setAttribute("style", "display : ;");
-        document
-          .querySelector(`#mview_${id}`)
-          .setAttribute("style", "display : none;");
+        document.querySelector(`#view_${id}`).setAttribute("style", "display: ;"); // view로 시작하는 건 안 보이게!!!
+        document.querySelector(`#mview_${id}`).setAttribute("style", "display: none;"); // mview는 보이게!!
+        //console.log(el.parentNode.parentNode.getAttribute("data-id")); // td의 부모인 tr 얻을 수 있음..
       }
 
-      // 회원 수정
+      // 회원 정보 수정 -> 바꿀 수 있는 거: 비밀번호, 이메일
       function userModify(el) {
         let id = el.parentNode.parentNode.getAttribute("data-id");
         let pwd = document.querySelector(`#userpwd${id}`).value;
@@ -326,84 +324,68 @@
           emailDomain: email[1],
         };
 
+        // let modifyInfo = {};
+        // modifyInfo.userId = id; // id는 얻어놓고
+        // if(pwd change???) // 예전거 얻어놓고 방금거 얻어와서 바뀌었냐? => 두개가 같지 않다면
+        // // => 바뀌었으면 ㅇㅇ 바뀐 거 집어넣어라~
+        // modifyInfo.userPwd = pwd;
+
         let config = {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(modifyInfo),
+          body: JSON.stringify(modifyInfo), // stringifty: JSON의 문자열로 보내야 함 => 직렬화해서 보냄!
         };
 
-        fetch(`${root}/admin/user/`, config)
+        // 역직렬화: parse 근데 이 역할을 response.json()이 해주고 있기 때문에 별도로 하지 않음
+        fetch(`${root}/admin/user`, config)
           .then((response) => response.json())
           .then((data) => makeList(data));
       }
 
-      // 회원 정보 열기
-      function userView(el) {
-        var modal = new bootstrap.Modal(
-          document.getElementById("userViewModal"),
-          {
-            backdrop: false,
-            keyboard: false,
-          }
-        );
-
-        let id = el.getAttribute("data-id");
-        fetch(`${root}/admin/user/${id}`)
-          .then((response) => response.json())
-          .then((data) => {
-            document.querySelector("#vid").innerText = data.userId;
-            document.querySelector("#vname").innerText = data.userName;
-            document.querySelector("#vemail").innerText =
-              data.emailId + "@" + data.emailDomain;
-            document.querySelector("#vjoindate").innerText = data.joinDate;
-            modal.show();
-          });
-      }
-
       // 회원 정보 삭제
       function deleteUser(el) {
-        let id = el.parentNode.parentNode.getAttribute("data-id");
-
+        let id = el.parentNode.parentNode.getAttribute("data-id"); // 삭제할 id
+        // rest는 query string이 아니라 /${id} 이렇게 붙여서 보냄
         let config = {
           method: "DELETE",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json" }, // json으로 넘겨주고 받을거야~
         };
-
         fetch(`${root}/admin/user/${id}`, config)
           .then((response) => response.json())
-          .then((data) => {
-            makeList(data);
-          });
+          .then((data) => makeList(data));
       }
 
       function makeList(users) {
         let tbody = ``;
         users.forEach(function (user) {
           tbody += `
-      	<tr id="view_${user.userId}" class="view text-center" data-id="${user.userId}" ondblclick="userView(this);">
-      		<td>${user.userId}</td>
-      		<td>${user.userPwd}</td>
-      		<td>${user.userName}</td>
-      		<td>${user.emailId}@${user.emailDomain}</td>
-      		<td>${user.joinDate}</td>
-      		<td>
-      			<button type="button" class="modifyViewBtn btn btn-outline-primary btn-sm" onclick="viewModify(this);">수정</button>
-      			<button type="button" class="deleteBtn btn btn-outline-danger btn-sm" onclick="deleteUser(this);">삭제</button>
-      		</td>
-      	</tr>
-      	<tr id="mview_${user.userId}" data-id="${user.userId}" style="display: none;" class="text-center">
-      		<td>${user.userId}</td>
-      		<td><input type="text" name="userpwd" id="userpwd${user.userId}" value="${user.userPwd}"></td>
-      		<td>${user.userName}</td>
-      		<td><input type="text" name="email" id="email${user.userId}" value="${user.emailId}@${user.emailDomain}"></td>
-      		<td>${user.joinDate}</td>
-      		<td>
-      			<button type="button" class="modifyBtn btn btn-primary btn-sm" onclick="userModify(this);">수정</button>
-      			<button type="button" class="cancelBtn btn btn-danger btn-sm" onclick="closeModify(this);">취소</button>
-      		</td>
-      	</tr>
-      `;
+            	<tr id="view_${user.userId}" class="view text-center" data-id="${user.userId}" ondblclick="userView(this);">
+            		<td>${user.userId}</td>
+            		<td>${user.userPwd}</td>
+            		<td>${user.userName}</td>
+            		<td>${user.emailId}@${user.emailDomain}</td>
+            		<td>${user.joinDate}</td>
+            		<td>
+            			<button type="button" class="modifyViewBtn btn btn-outline-primary btn-sm" onclick="viewModify(this);">수정</button>
+            			<button type="button" class="deleteBtn btn btn-outline-danger btn-sm" onclick="deleteUser(this)">삭제</button>
+            		</td>
+            	</tr>
+            	<tr id="mview_${user.userId}" data-id="${user.userId}" style="display: none;" class="text-center">
+            		<td>${user.userId}</td>
+            		<td><input type="text" name="userpwd" id="userpwd${user.userId}" value="${user.userPwd}"></td>
+            		<td>${user.userName}</td>
+            		<td><input type="text" name="email" id="email${user.userId}" value="${user.emailId}@${user.emailDomain}"></td>
+            		<td>${user.joinDate}</td>
+            		<td>
+            			<button type="button" class="modifyBtn btn btn-primary btn-sm" onclick="userModify(this);">수정</button>
+            			<button type="button" class="cancelBtn btn btn-danger btn-sm" onclick="closeModify(this);">취소</button>
+            		</td>
+            	</tr>
+            `;
         });
+
+        // 단!! 요즘 나오는 프레임워크들 onclick 잘 씀 ^^
+
         document.querySelector("#userlist").innerHTML = tbody;
       }
     </script>
