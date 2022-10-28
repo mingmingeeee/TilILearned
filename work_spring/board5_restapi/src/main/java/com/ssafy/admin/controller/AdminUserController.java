@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +36,7 @@ import com.ssafy.member.model.service.MemberService;
 // status: 정상적 처리 됐어.. 아니야... 페이지 없는데... 에러났는데.. 이런 거 
 @RestController
 @RequestMapping("/admin")
+@CrossOrigin("*") // 접속 허용하고자 하는 주소 범위
 public class AdminUserController {
 	
 	// 중복 코드: alt+shift+m으로 return값... 알아서 똑같이 method로 빼줌
