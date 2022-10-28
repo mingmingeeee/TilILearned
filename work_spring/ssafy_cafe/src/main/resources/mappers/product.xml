@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.cafe.model.mapper.ProductDao">
+
+	<delete id="deleteAll">
+		delete 
+		from t_product
+	</delete>
+	
+	<select id="getCount" resultType="int">
+		select count(*)
+		from t_product
+	</select>
+	
+	<insert id="insert" parameterType="product">
+		insert into t_product (id, name, type, price, img, org_img)
+		values (#{id}, #{name}, #{type}, #{price}, #{img}, #{orgImg})
+	</insert>
+	
+	<!-- product이든 Product이든 대문자, 소문자 상관 없음 -->
+	<update id="update" parameterType="product">
+		update t_product
+		<trim prefix="set" suffixOverrides=",">
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="type != null">
+				type = #{type},
+			</if>
+			<if test="price != null">
+				price = #{price},
+			</if>
+			<if test="img != null">
+				img = #{img},
+			</if>
+			<if test="orgImg != null">
+				org_img = #{orgImg},
+			</if>
+		</trim>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete 
+		from t_product
+		where id = #{productId}
+	</delete>
+	
+	<select id="select" parameterType="int" resultType="product">
+		select id, name, type, price, img, org_img
+		from t_product
+		where id = #{productId}
+	</select>
+	
+	<select id="selectAll" resultType="product">
+		select id, name, type, price, img, org_img
+		from t_product
+		order by id desc
+	</select>
+
+</mapper>
