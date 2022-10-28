@@ -54,7 +54,9 @@
                     name="word"
                     placeholder="검색어..."
                   />
-                  <button id="btn-search" class="btn btn-dark" type="button">검색</button>
+                  <button id="btn-search" class="btn btn-dark" type="button">
+                    검색
+                  </button>
                 </div>
               </form>
             </div>
@@ -105,15 +107,30 @@
           <div class="modal-body">
             <div class="mb-3">
               <label for="name" class="form-label">이름 : </label>
-              <input type="text" class="form-control" id="productname" placeholder="이름..." />
+              <input
+                type="text"
+                class="form-control"
+                id="productname"
+                placeholder="이름..."
+              />
             </div>
             <div class="mb-3">
-              <label for="type" class="form-label">가격 : </label>
-              <input type="text" class="form-control" id="producttype" placeholder="종류..." />
+              <label for="type" class="form-label">종류 : </label>
+              <input
+                type="text"
+                class="form-control"
+                id="producttype"
+                placeholder="종류..."
+              />
             </div>
             <div class="mb-3">
               <label for="price" class="form-label">가격 : </label>
-              <input type="text" class="form-control" id="productprice" placeholder="가격..." />
+              <input
+                type="text"
+                class="form-control"
+                id="productprice"
+                placeholder="가격..."
+              />
             </div>
           </div>
           <div class="modal-footer">
@@ -125,7 +142,11 @@
             >
               제품 등록
             </button>
-            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              data-bs-dismiss="modal"
+            >
               닫기
             </button>
           </div>
@@ -173,6 +194,9 @@
                   <th class="text-center">제품 가격</th>
                   <td class="text-left" id="vprice" colspan="3"></td>
                 </tr>
+                <tr>
+                  <img id="productimg" />
+                </tr>
               </tbody>
             </table>
           </div>
@@ -206,23 +230,114 @@
 
       // 제품 상세 조회
       function productView(el) {
-        var modal = new bootstrap.Modal(document.getElementById("productViewModal"), {
-          backdrop: true,
-          keyboard: false,
-        });
+        var modal = new bootstrap.Modal(
+          document.getElementById("productViewModal"),
+          {
+            backdrop: true,
+            keyboard: false,
+          }
+        );
         let id = el.getAttribute("data-id");
-        let name = el.getAttribute(`productname${id}`);
-        let type = el.getAttribute(`producttype${id}`);
-        let price = el.getAttribute(`productprice${id}`);
         fetch(`${root}/admin/product/${id}`)
           .then((response) => response.json())
           .then((data) => {
-            document.querySelector("#vid").innerText = id;
-            document.querySelector("#vname").innerText = name;
-            document.querySelector("#vtype").innerText = type;
-            document.querySelector("#vprice").innerText = price;
+            document.querySelector("#vid").innerText = data.id;
+            document.querySelector("#vname").innerText = data.name;
+            document.querySelector("#vtype").innerText = data.type;
+            document.querySelector("#vprice").innerText = data.price;
+            document
+              .querySelector("#productimg")
+              .setAttribute("src", `./img/${data.img}`);
             modal.show();
           });
+      }
+
+      // 제품 수정 열기
+      function viewModify(el) {
+        let id = el.parentNode.parentNode.getAttribute("data-id");
+        document
+          .querySelector(`#view_${id}`)
+          .setAttribute("style", "display: none;");
+        document
+          .querySelector(`#mview_${id}`)
+          .setAttribute("style", "display: ;");
+      }
+
+      // 제품 수정 닫기
+      function closeModify(el) {
+        let id = el.parentNode.parentNode.getAttribute("data-id");
+        document
+          .querySelector(`#view_${id}`)
+          .setAttribute("style", "display: ;");
+        document
+          .querySelector(`#mview_${id}`)
+          .setAttribute("style", "display: none;");
+      }
+
+      // 제품 수정하기
+      function productModify(el) {
+        let id = el.parentNode.parentNode.getAttribute("data-id");
+
+        let name = document.querySelector(`#productname${id}`).value;
+        let type = document.querySelector(`#producttype${id}`).value;
+        let price = document.querySelector(`#productprice${id}`).value;
+        let modiyProductInfo = {
+          id: id,
+          name: name,
+          type: type,
+          price: price,
+        };
+
+        let config = {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(modiyProductInfo),
+        };
+
+        fetch(`${root}/admin/product/${id}`, config)
+          .then((response) => response.json())
+          .then((data) => makeList(data));
+      }
+
+      // 제품 등록하기
+      document
+        .querySelector("#btn-register")
+        .addEventListener("click", function () {
+          let name = document.querySelector("#productname").value;
+          let type = document.querySelector("#producttype").value;
+          let price = document.querySelector("#productprice").value;
+
+          let registerProductInfo = {
+            name: name,
+            type: type,
+            price: price,
+            img: "null",
+            orgImg: "null",
+          };
+
+          let config = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(registerProductInfo),
+          };
+
+          fetch(`${root}/admin/product`, config)
+            .then((response) => response.json())
+            .then((data) => makeList(data));
+        });
+
+      // 제품 삭제하기
+      function productDelete(el) {
+        let id = el.parentNode.parentNode.getAttribute("data-id");
+
+        let config = {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        };
+
+        fetch(`${root}/admin/product/${id}`, config)
+          .then((response) => response.json())
+          .then((data) => makeList(data));
       }
 
       // 제품 목록 tbody
@@ -230,27 +345,27 @@
         let tbody = ``;
         products.forEach(function (product) {
           tbody += `
-						<tr id="view_${product.id}" class="view text-center" data-id="${product.id}" ondblclick="productView(this);">
-							<td>${product.id}</td>
-							<td>${product.name}</td>
-              <td>${product.type}</td>
-							<td>${product.price}</td>
-							<td>
-								<button type="button" class="modifyViewBtn btn btn-outline-primary btn-sm" onclick="viewModify(this);">수정</button>
-								<button type="button" class="deleteBtn btn btn-outline-danger btn-sm" onclick="productDelete(this);">삭제</button>
-							</td>
-						</tr>
-						<tr id="mview_${product.id}" data-id="${product.id}" style="display: none;" class="text-center">
-							<td>${product.id}</td>
-              <td><input type="text" name="productname" id="productname${product.id}" value="${product.name}"></td>
-              <td><input type="text" name="producttype" id="producttype${product.id}" value="${product.type}"></td>
-              <td><input type="number" name="productprice" id="productprice${product.id}" value="${product.price}"></td>
-							<td>
-								<button type="button" class="modifyBtn btn btn-primary btn-sm" onclick="productModify(this);">수정</button>
-								<button type="button" class="cancelBtn btn btn-danger btn-sm" onclick="closeModify(this);">취소</button>
-							</td>
-						</tr>
-					`;
+      	<tr id="view_${product.id}" class="view text-center" data-id="${product.id}" ondblclick="productView(this);">
+      		<td>${product.id}</td>
+      		<td>${product.name}</td>
+          <td>${product.type}</td>
+      		<td>${product.price}</td>
+      		<td>
+      			<button type="button" class="modifyViewBtn btn btn-outline-primary btn-sm" onclick="viewModify(this);">수정</button>
+      			<button type="button" class="deleteBtn btn btn-outline-danger btn-sm" onclick="productDelete(this);">삭제</button>
+      		</td>
+      	</tr>
+      	<tr id="mview_${product.id}" data-id="${product.id}" style="display: none;" class="text-center">
+      		<td>${product.id}</td>
+               <td><input type="text" name="productname" id="productname${product.id}" value="${product.name}"></td>
+               <td><input type="text" name="producttype" id="producttype${product.id}" value="${product.type}"></td>
+               <td><input type="number" name="productprice" id="productprice${product.id}" value="${product.price}"></td>
+      		<td>
+      			<button type="button" class="modifyBtn btn btn-primary btn-sm" onclick="productModify(this);">수정</button>
+      			<button type="button" class="cancelBtn btn btn-danger btn-sm" onclick="closeModify(this);">취소</button>
+      		</td>
+      	</tr>
+      `;
         });
         document.querySelector("#productlist").innerHTML = tbody;
       }

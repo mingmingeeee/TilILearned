@@ -11,6 +11,14 @@ public class Product {
 	
 	public Product() {}
 
+	public Product(Integer id, String name, String type, Integer price) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.type = type;
+		this.price = price;
+	}
+
 	public Product(Integer id, String name, String type, Integer price, String img, String orgImg) {
 		super();
 		this.id = id;
