@@ -118,32 +118,84 @@ public class AdminRestController {
 			return new ResponseEntity<String>("Error: userRemove()", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@GetMapping("/product")
 	public ResponseEntity<?> productList() {
 		try {
 			List<Product> products = productService.getProducts();
-			
-			if(products!=null && !products.isEmpty()) {
-				return new ResponseEntity<List<Product>> (products, HttpStatus.OK);
+
+			if (products != null && !products.isEmpty()) {
+				return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
 			} else {
-				return new ResponseEntity<Void> (HttpStatus.NO_CONTENT);
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 			}
-		} catch(Exception e) {
-			return new ResponseEntity<String> ("Error: productList()", HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (Exception e) {
+			return new ResponseEntity<String>("Error: productList()", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@GetMapping("/product/{productid}")
 	public ResponseEntity<?> productView(@PathVariable("productid") Integer productId) {
 		try {
 			Product product = productService.getProduct(productId);
-			
-			return new ResponseEntity<Product> (product, HttpStatus.OK);
+
+			return new ResponseEntity<Product>(product, HttpStatus.OK);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return new ResponseEntity<String> ("Error: productList()", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Error: productList()", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PutMapping("/product/{productid}")
+	public ResponseEntity<?> productUpdate(@PathVariable("productid") Integer productId,
+			@RequestBody Product product) {
+		try {
+			productService.modifyProduct(product);
+
+			List<Product> products = productService.getProducts();
+
+			if (products != null && !products.isEmpty()) {
+				return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			return new ResponseEntity<String>("Error: productList()", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PostMapping("/product")
+	public ResponseEntity<?> productRegister(@RequestBody Product product) {
+		try {
+			productService.addProduct(product);
+
+			List<Product> products = productService.getProducts();
+
+			if (products != null && !products.isEmpty()) {
+				return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			return new ResponseEntity<String>("Error: productList()", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@DeleteMapping("/product/{productid}")
+	public ResponseEntity<?> productDelete(@PathVariable("productid") Integer productId) {
+		try {
+			productService.removeProduct(productId);
+			
+			List<Product> products = productService.getProducts();
+			
+			if(products != null && !products.isEmpty()) {
+				return new ResponseEntity<List<Product>> (products, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
+		} catch(Exception e) {
+			return new ResponseEntity<String> ("Error: productDelete()", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
