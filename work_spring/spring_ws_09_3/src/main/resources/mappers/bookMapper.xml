@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.ws.model.dao.BookDao">
+
+	<delete id="deleteAll">
+		DELETE
+		FROM book
+	</delete>
+	
+	<select id="getCount" resultType="int">
+		SELECT COUNT(*)
+		FROM book
+	</select>
+	
+	<!-- 도서 등록 -->
+	<insert id="insert" parameterType="book">
+		INSERT INTO book (isbn, title, author, price, content, img, org_img) VALUES
+		(#{isbn}, #{title}, #{author}, #{price}, #{content}, #{img}, #{orgImg})
+	</insert>
+	
+	<!-- 도서 상세 조회 -->
+	<select id="select" parameterType="string" resultType="book">
+		SELECT isbn, title, author, price, content, img, org_img
+		FROM book
+		WHERE isbn = #{isbn}
+	</select>
+	
+	<!-- 도서 수정 -->
+	<update id="update" parameterType="Book">
+		UPDATE book
+		SET
+			author = #{author},
+			title = #{title},
+			price = #{price},
+			content = #{content},
+			img = #{img},
+			org_img = #{orgImg}
+		WHERE isbn = #{isbn}
+	</update>
+
+	<!-- 도서 삭제 -->
+	<delete id="delete" parameterType="String">
+		DELETE
+		FROM book
+		WHERE isbn = #{isbn}
+	</delete>
+	
+	<!-- 도서 전체 조회 -->
+	<select id="search" parameterType="searchCondition" resultType="book">
+		SELECT isbn, title, author, price, content, img, org_img
+		FROM book
+		<if test="key != 'none'">
+			WHERE ${key} like concat('%', #{word}, '%')
+		</if>
+		<if test="orderBy != 'none'">
+			ORDER BY ${orderBy} ${orderByDir}
+		</if>
+		<if test="limit">
+			LIMIT #{offset}, #{countPerPage}
+		</if>
+	</select>
+</mapper>
