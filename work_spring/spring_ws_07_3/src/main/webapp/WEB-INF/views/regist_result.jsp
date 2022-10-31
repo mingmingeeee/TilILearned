@@ -32,7 +32,7 @@
 					<tr>
 						<td>도서번호</td>
 						<td>${ book.isbn }</td>
-						<td rowspan="5"><img id="cover" src="${ root }/resources/upload/${ book.img }"></td>
+						<td rowspan="5"><img id="cover" src="${ root }/upload/${ book.img }"></td>
 					</tr>
 					<tr>
 						<td>도서명</td>

@@ -76,6 +76,9 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 				.setCachePeriod(3600).resourceChain(true).addResolver(new PathResourceResolver());
 		// ResourceHandler: /upload/file/** =>(연결이 됨)=> "file:///" + uploadFilePath + "/"
 		// file:/// :::: protocol
+		
+		// addResourceHandler: 리소스와 연결될 URL path
+		// addResourceLocations: 실제 리소스가 존재하는 외부 경로를 지정
 	}
 
 }
