@@ -7,13 +7,13 @@ import com.ssafy.hw.model.dto.User;
 
 public interface UserService {
 
-	// int insert(User user);
+	 int insert(User user);
 	
-	// User searchById(String id);
+	 User searchById(String id);
 	
-	// List<User> selectAll();
+	 List<User> selectAll();
 	
-	// List<User> searchByName(String name);
+	 List<User> searchByName(String name);
 	
-	// List<User> searchByCondition(SearchCondition con);
+	 List<User> searchByCondition(SearchCondition con);
 }

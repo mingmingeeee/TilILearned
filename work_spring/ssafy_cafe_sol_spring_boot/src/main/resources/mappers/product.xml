@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.cafe.model.mapper.ProductDao">
+
+	<delete id="deleteAll">
+		DELETE
+		FROM t_product
+	</delete>
+	
+	<select id="getCount" resultType="int">
+		SELECT COUNT(*)
+		FROM t_product
+	</select>
+
+	<insert id="insert" parameterType="Product">
+		INSERT INTO t_product (id, name, type, price, img, org_img)
+		VALUES (#{id}, #{name}, #{type}, #{price}, #{img}, #{orgImg})
+	</insert>
+	
+	<select id="select" parameterType="int" resultType="Product">
+		SELECT *
+		FROM t_product
+		WHERE id = #{id}
+	</select>
+
+	<update id="update" parameterType="Product">
+		UPDATE t_product
+		<trim prefix="set" suffixOverrides=",">
+			<if test="name != null">name = #{name},</if>
+			<if test="type != null">type = #{type},</if>
+			<if test="price != null">price = #{price},</if>
+			<if test="img != null">img = #{img},</if>
+			<if test="orgImg != null">org_img = #{orgImg},</if>
+		</trim>
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE
+		FROM t_product
+		WHERE id = #{id}
+	</delete>
+	
+	<select id="selectAll" resultType="Product">
+		SELECT id, name, type, price, img, org_img
+		FROM t_product
+		ORDER BY id ASC
+	</select>
+
+</mapper>

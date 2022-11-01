@@ -1,0 +1,20 @@
+싸피 카페
+
+1. pom.xml 작성 (제공)
+2. webapp/WEB-INF/web.xml 작성 (제공)
+3. root-context.xml 작성 (제공)
+  - context:component-scan
+  - DataSource
+  - SqlSessionFactoryBean
+  - mybatis-spring:scan
+  - TransactionManager
+  
+4. servlet-context.xml 작성 (제공)
+  - annotation-driven
+  - resources 경로 설정 (mapping="/assets/**" location="/resources/assets/")
+  - context:component-scan
+  - multipartResolver (파일 업로드)
+  
+5. Dao 작성
+  - UserDaoTest 모두 통과 되도록 작성
+  - ProductDaoTest 모두 통과 되도록 작성
