@@ -1,0 +1,45 @@
+<div>
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">SSAFY CAFE</a>
+
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal"
+        id="btn-show-login-modal">로그인</button>
+
+      <div style="display:none" id="login-user">
+        <span class="navbar-text me-2"></span>
+        <button type="button" class="btn btn-primary" onclick="logout()">로그아웃</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 로그인 Modal -->
+  <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><mark class="purple">로그인</mark></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="userid" class="form-label">아이디 : </label>
+            <input type="text" class="form-control" id="userid" placeholder="아이디..." />
+          </div>
+          <div class="mb-3">
+            <label for="userpass" class="form-label">비밀번호 : </label>
+            <input type="password" class="form-control" id="userpass" placeholder="비밀번호..." />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal" onclick="login()">
+            로그인
+          </button>
+          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

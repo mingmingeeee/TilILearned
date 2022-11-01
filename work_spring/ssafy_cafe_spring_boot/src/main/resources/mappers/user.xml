@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.cafe.model.mapper.UserDao">
+
+	<delete id="deleteAll">
+		delete 
+		from t_user
+	</delete>
+	
+	<select id="getCount" resultType="int">
+		select count(*)
+		from t_user
+	</select>
+	
+	<insert id="insert" parameterType="user">
+		insert into t_user (id, name, pass, stamps)
+		values (#{id}, #{name}, #{pass}, #{stamps})
+	</insert>
+	
+	<!-- suffixOverrides: SQL문 안에 쿼리 가장 뒤에 해당하는 문자들이 있으면 자동으로 지워줌 -->
+	<update id="update" parameterType="user">
+		update t_user
+		<trim prefix="set" suffixOverrides=",">
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="pass != null">
+				pass = #{pass},
+			</if>
+			<if test="stamps != null">
+				stamps = #{stamps},
+			</if>
+		</trim>
+		where id = #{id}
+	</update>	
+	
+	<delete id="delete" parameterType="string">
+		delete
+		from t_user
+		where id = #{id}
+	</delete>
+	
+	<select id="select" parameterType="string" resultType="user">
+		select id, name, pass, stamps
+		from t_user
+		where id = #{id}
+	</select>
+	
+	<select id="selectAll" resultType="user">
+		select id, name, pass, stamps
+		from t_user
+		order by id desc
+	</select>
+	
+	<!-- 로그인 처리 -->
+	<select id="login" parameterType="user" resultType="user">
+		SELECT id, name, stamps
+		FROM t_user
+		WHERE id = #{id} AND pass = #{pass}
+	</select>
+
+</mapper>

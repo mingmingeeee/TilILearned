@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.cafe.model.mapper.OrderDao">
+
+	<delete id="deleteAll">
+		DELETE
+		FROM t_order
+	</delete>
+	
+	<select id="getCount" resultType="int">
+		SELECT COUNT(*)
+		FROM t_order
+	</select>
+
+	<insert id="insertOrder" parameterType="order" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_order (user_id)
+		VALUES (#{userId})
+	</insert>
+
+	<insert id="registerDetail" parameterType="order">
+		INSERT INTO t_order_detail (order_id, product_id, quantity)
+		VALUES
+		<foreach collection="details" item="detail" separator=" , ">
+			(#{id}, #{detail.productId}, #{detail.quantity})
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="order">
+		UPDATE t_order
+		<trim prefix="set" suffixOverrides=",">
+			<if test="userId != null">user_id = #{userId},</if>
+			<if test="orderTime != null">order_time = #{orderTime},</if>
+			<if test="completed != null">completed = #{completed},</if>
+		</trim>
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE
+		FROM t_order
+		WHERE id = #{orderId}
+	</delete>
+	
+	<select id="selectAll" resultType="map">
+		SELECT o.id id, od.id detailId, o.user_id userId, u.name userName, p.name productName, p.price price, 
+			od.quantity quantity, UNIX_TIMESTAMP(o.order_time) * 1000 orderTime, o.completed completed
+		FROM t_order o
+		JOIN t_user u ON o.user_id = u.id
+		JOIN t_order_detail od ON o.id = od.order_id
+		JOIN t_product p ON od.product_id = p.id
+		ORDER BY o.id DESC
+	</select>
+
+</mapper>

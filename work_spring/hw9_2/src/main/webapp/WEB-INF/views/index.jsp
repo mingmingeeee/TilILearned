@@ -7,7 +7,7 @@
 <title>SSAFY 사용자 관리</title>
 </head>
 <body>
-<%@ include file="include/header.jsp"%>
+	<%@ include file="include/header.jsp"%>
 	<div class="container">
 		<h1>사용자 관리</h1>
 		<hr>

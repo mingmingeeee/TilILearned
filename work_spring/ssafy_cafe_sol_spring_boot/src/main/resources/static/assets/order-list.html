@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+  <link href="./css/app.css" rel="stylesheet" />
+  <title>주문목록</title>
+</head>
+
+<body>
+  <div class="include" data-html="header.html"></div>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10 col-md-10 col-sm-12">
+        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
+          <mark class="purple">주문목록</mark>
+        </h2>
+      </div>
+      <div class="col-lg-10 col-md-10 col-sm-12">
+        <div class="row align-self-center mb-2">
+          <div class="col-md-5 offset-7">
+            <form class="d-flex" id="form-search" action="">
+              <input type="hidden" name="pgno" value="1" />
+              <select class="form-select form-select-sm ms-5 me-1 w-50" id="skey" name="key" aria-label="검색조건">
+                <option value="" selected>검색조건</option>
+                <option value="ordertype">제품타입</option>
+                <option value="orderproductname">제품명</option>
+                <option value="orderusername">고객이름</option>
+                <option value="ordercompleted">처리여부</option>
+              </select>
+              <div class="input-group input-group-sm">
+                <input type="text" class="form-control" id="sword" name="word" placeholder="검색어..." />
+                <button id="btn-search" class="btn btn-dark" type="button">검색</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <table class="table table-hover">
+          <colgroup>
+            <col width="60" />
+            <col width="120" />
+            <col width="120" />
+            <col width="120" />
+            <col width="120" />
+            <col width="120" />
+            <col width="120" />
+            <col width="120" />
+            <col width="*" />
+          </colgroup>
+          <thead>
+            <tr>
+              <th class="text-center">주문번호</th>
+              <th class="text-center">고객ID</th>
+              <th class="text-center">이름</th>
+              <th class="text-center">제품명</th>
+              <th class="text-center">가격</th>
+              <th class="text-center">수량</th>
+              <th class="text-center">주문시간</th>
+              <th class="text-center">처리여부</th>
+              <th class="text-center">수정/삭제</th>
+            </tr>
+          </thead>
+          <tbody id="orderlist"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+  <script src="./js/include.js"></script>
+  <script src="./js/header.js"></script>
+  <script src="./js/util.js"></script>
+  <script>
+    // 주문 목록
+    fetch(`${root}/admin/order`)
+      .then(response => response.json())
+      .then(data => makeList(data));
+
+    // 수정 페이지 보기
+    function viewModify(el) {
+      let detailId = el.parentNode.parentNode.getAttribute("data-detail-id");
+      document.querySelector(`#view_${detailId}`).setAttribute("style", "display: none;");
+      document.querySelector(`#mview_${detailId}`).setAttribute("style", "display: ;");
+    }
+
+    // 수정 페이지 닫기
+    function modifyClose(el) {
+      let detailId = el.parentNode.parentNode.getAttribute("data-detail-id");
+      document.querySelector(`#view_${detailId}`).setAttribute("style", "display: ;");
+      document.querySelector(`#mview_${detailId}`).setAttribute("style", "display: none;");
+    }
+
+    // 주문 수정
+    function modifyOrder(el) {
+      let orderId = el.parentNode.parentNode.getAttribute("data-id");
+      let detailId = el.parentNode.parentNode.getAttribute("data-detail-id");
+      let completed = document.querySelector(`#ordercompleted${detailId}`).value;
+      let modifyInfo = {
+        completed: completed,
+      };
+      let config = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(modifyInfo),
+      };
+      fetch(`${root}/admin/order/${orderId}`, config)
+        .then(response => response.json())
+        .then(data => makeList(data));
+    }
+
+    // 주문 정보 삭제
+    function deleteOrder(el) {
+      let orderId = el.parentNode.parentNode.getAttribute("data-id");
+      let config = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      };
+      fetch(`${root}/admin/order/${orderId}`, config)
+        .then(response => response.json())
+        .then(data => makeList(data));
+    }
+
+    function makeList(orders) {
+      let tbody = ``;
+      orders.forEach(function (order) {
+        tbody += `
+						<tr id="view_${order.detailId}" class="view text-center" data-id="${order.id}" data-detail-id="${order.detailId}">
+							<td>${order.id}</td>
+							<td>${order.userId}</td>
+							<td>${order.userName}</td>
+							<td>${order.productName}</td>
+              <td>${comma(order.price)}</td>
+              <td>${order.quantity}</td>
+              <td>${longToDate(order.orderTime)}</td>
+              <td>${order.completed}</td>
+							<td>
+								<button type="button" class="btn btn-outline-primary btn-sm" onclick="viewModify(this)">수정</button>
+								<button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteOrder(this)">삭제</button>
+							</td>
+						</tr>
+						<tr id="mview_${order.detailId}" data-id="${order.id}" data-detail-id="${order.detailId}" style="display: none;" class="text-center">
+              <td>${order.id}</td>
+							<td>${order.userId}</td>
+							<td>${order.userName}</td>
+							<td>${order.productName}</td>
+              <td>${order.price}</td>
+              <td>${order.quantity}</td>
+              <td>${longToDate(order.orderTime)}</td>
+              <td><input style="width:60px;text-align:center" type="text" id="ordercompleted${order.detailId}" value="${order.completed}"></td>
+							<td>
+								<button type="button" class="btn btn-primary btn-sm" onclick="modifyOrder(this)">수정</button>
+								<button type="button" class="btn btn-danger btn-sm" onclick="modifyClose(this)">취소</button>
+							</td>
+						</tr>
+					`;
+      });
+      document.querySelector("#orderlist").innerHTML = tbody;
+    }
+  </script>
+</body>
+
+</html>
