@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <span>클릭 카운트 : {{count}}</span>
+      <button @click="count++">클릭</button>
+    </div>
+
+    <script type="text/javascript">
+      new Vue({
+        el: "#app",
+        data: {
+          count: 0,
+        },
+        beforeCreate: function () {
+          console.log("beforeCreate count: " + this.count);
+        },
+        created: function () {
+          console.log("created count: " + this.count);
+          console.log("created 연결된 DOM 엘리먼트: ", this.$el);
+        },
+        mounted: function () {
+          console.log("mounted count: " + this.count);
+          console.log("mount 연결된 DOM 엘리먼트: ", this.$el);
+        },
+        updated: function () {
+          console.log("updated 호출됨");
+          console.log("update count: " + this.count);
+        },
+        // 여기서의 this는 이 객체를 가리킴
+        // 그러니까 vue안에서 만드는 함수들은 arrow function 쓰지 말 것!!!
+        // 안에서 쓰는 건 써도 되는데 vue의 옵션 함수들을 ㄴㄴㄴㄴㄴ
+      });
+    </script>
+  </body>
+</html>
+
+<!-- arrow 함수의 this => "window"를 의미함!  -->

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div>메세지 : {{message}}</div>
+      <div v-html="'html 적용 메시지' + message"></div>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          message: "<h2 style='color: red'>Hello Vue~!</h2>",
+        },
+      });
+    </script>
+  </body>
+</html>
+
+<!-- v-html: XSS 공격때문에 잘 사용 안 함 -->
+<!-- => js들은... client가 다운받게끔 되어있짜나..
+결과적으로 보면... 다운 받게 하고 그걸 실행할 수 있는 코드를 집어넣으면 어띃게 될까??
+사이트가 엉망이 될 수도 있겠찌... -->
+
+<!-- 사용자가 입력을 하는 데이터라면?: html X 
+개발자가 내가 만들어서 적용할거야?: 써도 큰 문제 X 
+
+사용자가 입력하는 거에서는 html을 그냥 보여주는 것이 좋음 -->

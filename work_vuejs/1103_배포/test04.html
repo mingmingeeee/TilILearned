@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div>{{ message }}</div>
+      <div v-once>{{ message }}</div>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          message: "Hello Vue~!",
+        },
+      });
+    </script>
+  </body>
+</html>
+
+<!-- 처음에 한 번 가지고 와서 세팅하고 data가 바뀌더라도 제일 처음 찍은 거 한 번만 고정시키고
+  바뀌면 안 된다고 하는 게 v-once 디렉티브 => 결과적으로는 값이 한 번만 세팅 됨 -->

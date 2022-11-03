@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      var car = {
+        name: "아반떼",
+        manufacture: "현땡",
+        run: () => {
+          // arrow function의 this: window 객체
+          console.log(this);
+          console.log(this.name + "의 브랜드는 " + this.manufacture);
+          // arrow this에도 name이 있나봄...
+        },
+        // run() {
+        //   console.log(this);
+        //   console.log(this.name + "의 브랜드는 " + this.manufacture);
+        // },
+      };
+      car.run();
+    </script>
+  </body>
+</html>
