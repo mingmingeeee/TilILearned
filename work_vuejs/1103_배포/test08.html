@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 속성을 바인딩 합니다. -->
+      <!-- vue가 가지고 있는 v-bind:id="idValue" 데이터가 들어감-->
+      <div v-bind:id="idValue">v-bind 지정 연습</div>
+      <button v-bind:[key]="idValue">버튼</button><br />
+
+      <!-- button이 여러개면 class가 되어야 함 -->
+
+      <!-- 약어를 이용한 바인딩. -->
+      <div :id="idValue">v-bind 지정 연습</div>
+      <button :[key]="idValue">버튼</button><br />
+
+      <a v-bind:href="link2">싸피</a>
+      <a :href="link1">네이버</a>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          idValue: "btn-register",
+          key: "id",
+          link1: "http://www.naver.com",
+          link2: "http://edu.ssafy.com",
+        },
+      });
+    </script>
+  </body>
+</html>

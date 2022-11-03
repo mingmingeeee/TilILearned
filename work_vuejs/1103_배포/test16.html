@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+      [v-cloak]::before {
+        content: "로딩중...";
+      }
+      [v-cloak] > * {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>v-cloak</h2>
+    <div id="app">
+      <h1>1 일반. - {{msg}}</h1>
+      <div v-cloak>
+        <h1>2 v-cloak. - {{msg}}</h1>
+      </div>
+    </div>
+    <script>
+      /*
+        [v-cloak]::before { => v-cloak이 잡혀있는 게 보이기 전에는 content를 로딩중으로! (before: 이전 엘리먼트)
+        content: "로딩중...";
+        }
+        [v-cloak] > * { => v-cloak의 모든 자식을 display: none했다가 풀려버릠 
+            display: none;
+        }
+        */
+      setTimeout(function () {
+        // 3000이니까 3초 => 처음에는 app 엘리먼트와 마운트(연결) X.
+        // 3초 후에 연결 O !!!
+        new Vue({
+          el: "#app",
+          data: {
+            msg: "hello",
+          },
+        });
+      }, 3000);
+    </script>
+  </body>
+</html>

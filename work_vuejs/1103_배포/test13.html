@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <!-- 범위 반복문, 배열 반복문 처리 (객체 배열) -->
+    <h2>v-for</h2>
+    <div id="app">
+      <h2>객체배열 - 내용출력</h2>
+      <ul>
+        <!-- region: 객체 하나 -->
+        <li v-for="region in ssafy">지역 : {{region.name}}, {{region.count}}개반</li>
+      </ul>
+      <h2>객체배열 - 번호,내용 출력</h2>
+      <ul>
+        <!-- index 가져갈 수 있음 => 인덱스는 "두 번째에 나와야 함!!!"
+        "첫 번째"는 우리가 알고 있는 객체!!! -->
+        <li v-for="region, index in ssafy">
+          <!-- 밑에랑 다른 거: (region, index) 괄호 주는 게 더 알아보기 쉽겠져 ^^?-->
+          번호 : {{index + 1}}, 지역 : {{region.name}}, {{region.count}}개반
+        </li>
+      </ul>
+      <h2>객체배열 - 번호,내용 출력</h2>
+      <ul>
+        <li v-for="(region, index) in ssafy">
+          번호 : {{index + 1}}, 지역 : {{region.name}}, {{region.count}}개반
+        </li>
+
+        <!-- key란 ????????????? => 절대로 문서 안에서 똑같은 게 있으면 안 됨!!!
+        : -> bind => 요 index는 for = (indx)의 index임  
+        key 값: for문 돌 때 유일성 보장함 -->
+        <!-- 결과적으론~ key값을 쓸 때는 다른 key값의 이름과 똑같은 게 있으면 안 됨-->
+        <li v-for="(item, index) in items" :key="index"></li>
+      </ul>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          ssafy: [
+            {
+              name: "광주",
+              count: 2,
+            },
+            {
+              name: "구미",
+              count: 2,
+            },
+            {
+              name: "대전",
+              count: 3,
+            },
+            {
+              name: "서울",
+              count: 12,
+            },
+            {
+              name: "부울경",
+              count: 2,
+            },
+          ],
+        },
+      });
+    </script>
+  </body>
+</html>
