@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const obj = {
+        i: 10,
+        b: function () {
+          console.log("this b: " + this.i, this); // 함수 내부의 i
+          // { i: 10, b: [Function: b], c: [Function: c] } => obj 객체 자체를 의미함
+          return 11;
+        },
+        c: () => {
+          console.log("this c: " + this.i, this); // undefined
+          // undefined {} => window 객체
+          return 12;
+        },
+      };
+      this.personName = "김싸피";
+      console.log(obj.i); // 10
+      console.log(obj.b()); // 11
+      console.log(obj.c()); // 12
+    </script>
+  </body>
+</html>
