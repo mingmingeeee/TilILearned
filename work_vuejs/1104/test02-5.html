@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 5-1. 전통적인 함수 예제
+      // const obj = {
+      //   num: 100,
+      // };
+
+      // window.num = 2020;
+
+      // const add = function (a, b, c) {
+      //   return this.num + a + b + c; // function바깥쪽에 있으니 (객체 안에 없는)
+      //   // this = global 객체 (= window)
+      //   // => 2020 + 10 + 20 + 30 = 2080
+      // };
+
+      // console.log(add(10, 20, 30));
+
+      // call method
+      // call: 모든 function마다 이 메서드를 작성해서 달아놨다고 생각하믄 됨..
+      // 그렇다믄!
+      // 내가 메서드를 사용하고 싶은 객체 안에서 실행하고 싶을 때 사용하면 됨
+      // 그럼 this는 obj 객체가 될 것. => 100 + 10 + 20 + 30 = 160
+      // 1번째 param에 객체 쓰면 됨
+      // const resultCall = add.call(obj, 10, 20, 30);
+      // console.log(resultCall);
+
+      // // apply: 배열 형태로 파라미터를 넘겨주는
+      // const arr = [10, 20, 30];
+      // const resultApply = add.apply(obj, arr);
+      // console.log(resultApply);
+
+      // // bind: add함수를 obj에 집어넣고
+      // // 실행하고자 하는 시점에서 함수 실행하게끔 만들어줌
+      // const resultBind = add.bind(obj);
+      // console.log(resultBind(10, 20, 30));
+
+      // 5-2. 화살표 함수
+      // 화살표 함수를 이용할 때는 call, apply, bind 쓸 수 없음
+      // const obj = {
+      //   num: 100,
+      // };
+
+      // window.num = 2020;
+
+      // const add = (a, b, c) => {
+      //   return this.num + a + b + c; // function바깥쪽에 있으니 (객체 안에 없는)
+      //   // this = global 객체 (= window)
+      //   // => 2020 + 10 + 20 + 30 = 2080
+      // };
+
+      // console.log(add(10, 20, 30));
+
+      // const resultCall = add.call(obj, 10, 20, 30);
+      // console.log(resultCall);
+
+      // // apply: 배열 형태로 파라미터를 넘겨주는
+      // const arr = [10, 20, 30];
+      // const resultApply = add.apply(obj, arr);
+      // console.log(resultApply);
+
+      // // bind: add함수를 obj에 집어넣고
+      // // 실행하고자 하는 시점에서 함수 실행하게끔 만들어줌
+      // const resultBind = add.bind(obj);
+      // console.log(resultBind(10, 20, 30));
+    </script>
+  </body>
+</html>
