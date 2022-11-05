@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy House</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+    <link href="../css/index.css" rel="stylesheet" />
+    <link href="../css/app.css" rel="stylesheet" />
+    <script type="text/javascript" src="../js/favlist_event.js"></script>
+  </head>
+  <body>
+    <div class="row justify-content-center" id="boardcontents"></div>
+  </body>
+
+  <script>
+    let root = "";
+
+    // 초기 리스트 불러올 때 사용하기 위한 map
+    boardList(null);
+
+    // 게시판 목록
+    function boardList(map) {
+      let config = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      if (map == null) {
+        fetch(`${root}/boards/board`)
+          .then((response) => response.json())
+          .then((data) => makeList(data));
+      } else {
+        if (map.pgno != "") {
+          if (map.key != "") {
+            if (map.word != "") {
+              fetch(`${root}/boards/board/${map.pgno}/${map.key}/${map.word}`)
+                .then((response) => response.json())
+                .then((data) => makeList(data));
+            } else {
+              fetch(`${root}/boards/board/${map.pgno}/${map.key}`)
+                .then((response) => response.json())
+                .then((data) => makeList(data));
+            }
+          } else {
+            fetch(`${root}/boards/board/${map.pgno}`)
+              .then((response) => response.json())
+              .then((data) => makeList(data));
+          }
+        }
+      }
+    }
+
+    function makeList(data) {
+      let tbody = ` <div class="col-lg-10 col-md-10 col-sm-12">
+           <h2 class="my-3 py-3 shadow-sm bg-light text-center">
+             	게시판
+           </h2>
+         </div>
+         <div class="col-lg-10 col-md-10 col-sm-12">
+           <div class="row align-self-center mb-2">
+             <div class="col-md-2 text-start">
+               <button type="button" id="btn-mv-register" class="btn btn-outline-primary btn-sm"
+                onclick="articleRegister();">
+                 글쓰기
+               </button>
+             </div>
+             <div class="col-md-5 offset-5">
+               <form class="d-flex" id="form-search" action="">
+                 <input type="hidden" name="pgno" value="1"/>
+                 <select
+                   class="form-select form-select-sm ms-5 me-1 w-50"
+                   id="skey"
+                   name="key"
+                   aria-label="검색조건"
+                 >
+                   <option value="" selected>검색조건</option>
+                   <option value="subject">제목</option>
+                   <option value="userid">작성자</option>
+                 </select>
+                 <div class="input-group input-group-sm">
+                   <input type="text" class="form-control" id="sword" name="word" placeholder="검색어..." />
+                   <button id="btn-search" class="btn btn-dark" type="button">검색</button>
+                 </div>
+               </form>
+             </div>
+           </div>
+           <table class="table table-hover">
+             <thead>
+               <tr class="text-center">
+                 <th scope="col">글번호</th>
+                 <th scope="col">제목</th>
+                 <th scope="col">작성자</th>
+                 <th scope="col">조회수</th>
+                 <th scope="col">작성일</th>
+               </tr>
+             </thead>
+             <tbody>`;
+      data["articles"].forEach(function (article) {
+        tbody += `
+
+               <tr class="text-center">
+                 <th scope="row">${article.articleNo}</th>
+                 <td class="text-start">
+                   <a
+                     href="#"
+                     class="article-title link-dark"
+                     data-no="${article.articleNo}"
+                     style="text-decoration: none"
+                     onclick="articleView(this);"
+                   >
+                     ${article.subject}
+                   </a>
+                 </td>
+                 <td>${article.userName}</td>
+                 <td>${article.hit}</td>
+                 <td>${article.registerTime}</td>
+               </tr>
+             `;
+      });
+      tbody += `</tbody>
+           </table>
+         </div>
+         <div class="m-3 row">${data["navigation"].navigator}</div>
+       </div>`;
+      document.querySelector("#boardcontents").innerHTML = tbody;
+
+      let pages = document.querySelectorAll(".page-link");
+
+      var sel = document.getElementById("skey");
+      for (var i = 0; i < sel.length; i++) {
+        if (sel[i].value == data["key"]) {
+          sel[i].selected = true;
+        }
+      }
+
+      if (data["word"] != "" && data["word"] != null)
+        document.getElementById("sword").value = data["word"];
+
+      pages.forEach(function (page) {
+        page.addEventListener("click", function () {
+          let map = {
+            pgno: page.parentNode.getAttribute("data-pg"),
+            key: document.getElementById("skey").value,
+            word: document.getElementById("sword").value,
+          };
+          boardList(map);
+        });
+      });
+
+      document
+        .querySelector("#btn-search")
+        .addEventListener("click", function () {
+          let map = {
+            pgno: "1",
+            key: document.getElementById("skey").value,
+            word: document.getElementById("sword").value,
+          };
+          boardList(map);
+        });
+    }
+
+    // 게시판 등록 POST
+    function articleRegister() {
+      let tbody = ` <div class="col-lg-10 col-md-10 col-sm-12">
+      <h2 class="my-3 py-3 shadow-sm bg-light text-center">
+           	글쓰기
+          </h2>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-12">
+            <input type="hidden" name="pgno" value="1">
+          <input type="hidden" name="key" value="">
+          <input type="hidden" name="word" value="">
+            <div class="mb-3">
+              <label for="subject" class="form-label">제목 : </label>
+              <input
+                type="text"
+                class="form-control"
+                id="subject"
+                name="subject"
+                placeholder="제목..."
+              />
+            </div>
+            <div class="mb-3">
+              <label for="content" class="form-label">내용 : </label>
+              <textarea class="form-control" id="content" name="content" rows="7"></textarea>
+            </div>
+            <div class="col-auto text-center mt-3">
+              <button type="button" id="btn-register" class="btn btn-outline-primary mb-3">
+                글작성
+              </button>
+              <button type="button" id="btn-list" class="btn btn-outline-danger mb-3">
+                목록으로이동...
+              </button>
+            </div>
+        </div>
+      </div>
+        `;
+
+      document.querySelector("#boardcontents").innerHTML = tbody;
+
+      document
+        .querySelector("#btn-register")
+        .addEventListener("click", function () {
+          if (!document.querySelector("#subject").value) {
+            alert("제목 입력!!");
+            return;
+          } else if (!document.querySelector("#content").value) {
+            alert("내용 입력!!");
+            return;
+          } else {
+            let registerinfo = {
+              subject: document.querySelector("#subject").value,
+              content: document.querySelector("#content").value,
+            };
+            let config = {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(registerinfo),
+            };
+            fetch(`${root}/article/board`, config)
+              .then((response) => response.text)
+              .then((data) => {
+                alert("글쓰기 완료!!");
+                return boardList(null);
+              });
+          }
+        });
+
+      document
+        .querySelector("#btn-list")
+        .addEventListener("click", function () {
+          if (
+            confirm("취소를 하시면 작성한 글은 삭제됩니다.\n취소하시겠습니까?")
+          ) {
+            boardList(null);
+          }
+        });
+    }
+
+    // 글 보기 (GET)
+    function articleView(el) {
+      let tbody = ``;
+      let articleNo = el.getAttribute("data-no");
+      fetch(`${root}/boards/article/${articleNo}`)
+        .then((response) => response.json())
+        .then((data) => makeView(data));
+    }
+
+    function makeView(article) {
+      let tbody = `
+        <div class="col-lg-10 col-md-10 col-sm-12">
+          <h2 class="my-3 py-3 shadow-sm bg-light text-center">
+       			    글보기
+          </h2>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-12">
+          <div class="row my-2">
+            <h2 class="text-secondary px-5">${article.subject}</h2>
+          </div>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="clearfix align-content-center">
+                <img
+                  class="avatar me-2 float-md-start bg-light p-2"
+                  src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
+                />
+                <p>
+                  <span class="fw-bold">${article.userName}</span> <br />
+                  <span class="text-secondary fw-light"> ${article.registerTime} 조회 : ${article.hit} </span>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4 align-self-center text-end">댓글 : 0</div>
+            <div class="divider mb-3"></div>
+            <div class="text-secondary">
+              ${article.content}
+            </div>
+            <div class="divider mt-3 mb-3"></div>
+            <div class="d-flex justify-content-end">
+              <button type="button" id="btn-list" class="btn btn-outline-primary mb-3">
+                글목록
+              </button>
+
+              <button type="button" id="btn-mv-modify" class="btn btn-outline-success mb-3 ms-1" onclick="viewModify(${article.articleNo});">
+                글수정
+              </button>
+              <button type="button" id="btn-delete" class="btn btn-outline-danger mb-3 ms-1" onclick="articleDelete(${article.articleNo});">
+                글삭제
+              </button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+        `;
+      document.querySelector("#boardcontents").innerHTML = tbody;
+
+      document
+        .querySelector("#btn-list")
+        .addEventListener("click", function () {
+          boardList(null);
+        });
+    }
+
+    // 게시판 수정 => (GET & PUT)
+    function viewModify(articleNo) {
+      fetch(`${root}/boards/article/${articleNo}`)
+        .then((response) => response.json())
+        .then((data) => {
+          let tbody = `   <div class="col-lg-10 col-md-10 col-sm-12">
+          <h2 class="my-3 py-3 shadow-sm bg-light text-center">
+            	글수정
+          </h2>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-12">
+            <div class="mb-3">
+              <label for="subject" class="form-label">제목 : </label>
+              <input type="text" class="form-control" id="subject" name="subject" value="${data.subject}" />
+            </div>
+            <div class="mb-3">
+              <label for="content" class="form-label">내용 : </label>
+              <textarea class="form-control" id="content" name="content" rows="7">${data.content}</textarea>
+            </div>
+            <div class="col-auto text-center">
+              <button type="button" id="btn-modify" class="btn btn-outline-primary mb-3">
+                글수정
+              </button>
+              <button type="button" id="btn-list" class="btn btn-outline-danger mb-3">
+                목록으로이동...
+              </button>
+            </div>
+        </div>
+      </div>
+
+        `;
+
+          document.querySelector("#boardcontents").innerHTML = tbody;
+
+          document
+            .querySelector("#btn-modify")
+            .addEventListener("click", function () {
+              if (!document.querySelector("#subject").value) {
+                alert("제목 입력!!");
+                return;
+              } else if (!document.querySelector("#content").value) {
+                alert("내용 입력!!");
+                return;
+              } else {
+                let subject = document.querySelector(`#subject`).value;
+                let content = document.querySelector(`#content`).value;
+                let modifyinfo = {
+                  articleNo: data.articleNo,
+                  subject: subject,
+                  content: content,
+                };
+                let config = {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(modifyinfo),
+                };
+                console.log(config.body);
+                fetch(`${root}/boards/article`, config)
+                  .then((response) => response.json())
+                  .then((data2) => makeView(data2));
+              }
+            });
+
+          document
+            .querySelector("#btn-list")
+            .addEventListener("click", function () {
+              if (
+                confirm(
+                  "취소를 하시면 작성중인 글은 삭제됩니다.\n취소하시겠습니까?"
+                )
+              ) {
+                boardList(null);
+              }
+            });
+        });
+    }
+
+    // 게시판 삭제 (DELETE)
+    function articleDelete(articleNo) {
+      if (confirm("정말 삭제하시겠습니까?")) {
+        let config = {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        fetch(`${root}/boards/article/${articleNo}`, config)
+          .then((response) => response.text)
+          .then((data) => boardList(null));
+      }
+    }
+  </script>
+</html>
