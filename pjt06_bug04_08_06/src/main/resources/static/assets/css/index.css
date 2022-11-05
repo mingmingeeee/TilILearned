@@ -1,0 +1,128 @@
+nav li a {
+    text-decoration: none;
+    font-size: 16px;
+    color : white; 
+}
+nav li a:hover {
+    font-weight: bold;
+}
+#nav-user-name{
+	text-decoration: none;
+    font-size: 12px;
+    color : white; 
+}
+
+#header {
+    background-color: #204981;
+}
+
+input {
+    border-radius: 50px; 
+}
+
+.loginmodal {
+    width: 100px;
+}
+
+body {
+	padding-top: 100px;
+	margin-bottom: 0px;
+    position: relative;
+    min-height:95vh;
+}
+.bc {
+    min-height: 80vh;
+}
+#bodyContent {
+    background-image: url('https://cdn.pixabay.com/photo/2018/02/27/06/30/skyscrapers-3184798_960_720.jpg');
+    background-size: cover;
+    background-repeat:no-repeat;
+    width : 100vw;
+    height: 60vw;
+    max-height: 600px;
+    background-position: center;
+    
+}
+
+footer {
+    border-top : solid 1px #d6d6d6;
+    color : gray;
+    position : relative;
+	bottom : 0;
+}
+
+.home1 {
+    width : 200px;
+    height : 250px;
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBfSew_4TevFmuT6pljkeMVtIf0_ZFUeQ6lORfqZBDDJLFIhlfFJktnkpIvqWTi2ZKhX0&usqp=CAU');
+    background-size: cover;
+    background-repeat:no-repeat;
+}
+
+.home2 {
+    width : 200px;
+    height : 250px;
+    background-image: url('https://mblogthumb-phinf.pstatic.net/MjAxNzA2MjdfMjI3/MDAxNDk4NTM3NDUzMzY3.bPQ6H4d_Xvulq1djGZf-mA33xaS9xHKf9fDSb2cuA0Ig.qfQu4t-7UcSEWkZDY5LlrycA1P4x2VCiU6MllDL5M4Ag.JPEG.is8478/%ED%95%9C%EA%B5%AD_%EB%8B%A8%EB%8F%85%EC%A3%BC%ED%83%9D_%2822%29.jpg?type=w2');
+    background-size: cover;
+    background-repeat:no-repeat;
+}
+
+.home3 {
+    width : 200px;
+    height : 250px;
+    background-image: url('https://t1.daumcdn.net/cfile/tistory/9973CE3C5F389B0A1F');
+    background-size: cover;
+    background-repeat:no-repeat;
+}
+
+.home4 {
+    width : 200px;
+    height : 250px;
+    background-image: url('https://images.homify.com/image/upload/c_scale,h_500,w_500/v1457324553/p/photo/image/1384380/_2BD8532.jpg');
+    background-size: cover;
+    background-repeat:no-repeat;
+}
+
+#list > div  {
+    margin : 10px auto;
+    width: 100%;
+}
+
+#list > div > div {
+    margin : 10px auto;
+    background-position: center;
+}
+
+#banner {
+    max-width : 800px;
+    margin: 0 auto;
+    text-align: center;
+    height: 100%;
+    display: table
+}
+#bannertitle {
+    color: white;
+    font-size: 80px;
+    width: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#subtitle {
+    color: #7DA5E1	;
+    font-size: 40px;
+    width: 100%;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#subtitle > a {
+    text-decoration: none;
+    font-size: 32px;
+    background-color: #ffffff;
+    color : #506EA5;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 5px 25px;
+}

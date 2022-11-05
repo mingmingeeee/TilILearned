@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.apt.model.mapper.AptDao">
+
+	<select id="selectAll" parameterType="string"
+		resultType="HouseInfo">
+		select distinct *
+		from houseinfo
+		where dongCode
+		like
+		#{regionCode}
+	</select>
+
+	<select id="getAptDealInfo" parameterType="string"
+		resultType="HouseDeal">
+		SELECT hd.* FROM houseinfo hi left join housedeal hd on
+		hi.aptCode = hd.aptCode where hi.aptCode like #{aptCode} order by hd.dealYear desc
+	</select>
+
+	<select id="getFavorite2" parameterType="string"
+		resultType="FavArea">
+		SELECT *
+		from favarea as A join
+		dongcode as B on A.dongCode
+		=B.dongCode
+		where user_id=#{userId}
+	</select>
+
+	<!-- 여기 그 key???뭐시기 추가해야함. -->
+	<insert id="insertFavorite" parameterType="FavArea">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			SELECT
+			MAX(no) + 1 FROM favarea
+		</selectKey>
+		insert into
+		favarea (no, user_id, dongCode) values(#{no},
+		#{userId},#{dongCode})
+	</insert>
+
+	<select id="selectGuGunNames" parameterType="string"
+		resultType="DongCode">
+		SELECT dongCode, gugunName FROM dongcode
+		WHERE dongcode LIKE
+		#{sidoCode}
+		AND gugunName IS NOT NULL
+	</select>
+
+	<select id="selectSidoNames" parameterType="string"
+		resultType="DongCode">
+		SELECT dongCode,
+		sidoName FROM dongcode WHERE dongcode LIKE
+		#{code}
+	</select>
+
+	<select id="selectDongNames" parameterType="string"
+		resultType="DongCode">
+		SELECT dongCode,
+		dongName FROM dongcode WHERE dongcode LIKE
+		#{code} AND dongName IS NOT NULL
+	</select>
+
+</mapper>
