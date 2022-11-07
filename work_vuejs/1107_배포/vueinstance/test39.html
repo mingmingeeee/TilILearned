@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <div>
+        <p>수업을 듣는 지역을 선택하시오</p>
+        <select v-model="selectedArea">
+          <option v-for="option in options" v-bind:value="option.value">{{ option.text }}</option>
+        </select>
+      </div>
+      <span>선택한 지역 : {{ selectedArea }}</span>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          selectedArea: "",
+          options: [],
+        },
+        created() {
+          // data 바깥쪽에서 사용하면 this.적어줘야한댜!
+          this.options = [
+            // 백엔드에서 data가 넘어왔다고 생각 ^^..
+            { text: "서울", value: "seoul" },
+            { text: "광주", value: "gwangju" },
+            { text: "대전", value: "daejeon" },
+            { text: "구미", value: "gumi" },
+            { text: "부울경", value: "buk" },
+          ];
+          param = "gwangju";
+          this.selectedArea = param;
+        },
+      });
+    </script>
+  </body>
+</html>
