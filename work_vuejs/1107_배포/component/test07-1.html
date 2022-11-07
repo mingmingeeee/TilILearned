@@ -9,17 +9,34 @@
 
   <body>
     <div id="app">
-      <child-comp area="부울경" v-bind:msg="msg[parseInt(Math.random() * 5)]"></child-comp>
-      <child-comp area="광주" v-bind:msg="msg[parseInt(Math.random() * 5)]"></child-comp>
-      <child-comp area="구미" v-bind:msg="msg[parseInt(Math.random() * 5)]"></child-comp>
-      <child-comp area="대전" v-bind:msg="msg[parseInt(Math.random() * 5)]"></child-comp>
-      <child-comp area="서울" v-bind:msg="msg[parseInt(Math.random() * 5)]"></child-comp>
+      <child-comp
+        area="부울경"
+        v-bind:msg="msg[parseInt(Math.random() * 5)]"
+      ></child-comp>
+      <child-comp
+        area="광주"
+        v-bind:msg="msg[parseInt(Math.random() * 5)]"
+      ></child-comp>
+      <child-comp
+        area="구미"
+        v-bind:msg="msg[parseInt(Math.random() * 5)]"
+      ></child-comp>
+      <child-comp
+        area="대전"
+        v-bind:msg="msg[parseInt(Math.random() * 5)]"
+      ></child-comp>
+      <child-comp
+        area="서울"
+        v-bind:msg="msg[parseInt(Math.random() * 5)]"
+      ></child-comp>
     </div>
+
     <template id="ChildComp">
       <div>
         <h2>SSAFY {{area}}지역 8기 {{msg}}</h2>
       </div>
     </template>
+
     <script>
       Vue.component("childComp", {
         props: ["area", "msg"],

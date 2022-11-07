@@ -14,15 +14,18 @@
       <count-view></count-view>
       <count-view></count-view>
     </div>
+
     <template id="countview">
       <div>
-        <span>{{ count }}</span>
-        <button @click="count++">클릭</button>
+        <span>{{ a }}</span>
+        <button @click="a++">클릭</button>
       </div>
     </template>
+
     <script>
       let num = {
         count: 0,
+        a: 1,
       };
       Vue.component("count-view", {
         data() {
@@ -30,6 +33,7 @@
         },
         template: "#countview",
       });
+
       new Vue({
         el: "#app",
       });
