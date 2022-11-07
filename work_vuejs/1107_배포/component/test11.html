@@ -12,12 +12,14 @@
       <my-count></my-count>
       <log></log>
     </div>
+
     <template id="mycount">
       <div>
         <input type="number" v-model.number="count" @keyup.enter="send" />
         <button @click="send">보내기</button>
       </div>
     </template>
+
     <template id="log">
       <div>
         <h2>{{count}}</h2>
@@ -26,6 +28,7 @@
         </ul>
       </div>
     </template>
+
     <script>
       const bus = new Vue();
       Vue.component("my-count", {
