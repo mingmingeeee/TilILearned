@@ -8,16 +8,19 @@
   </head>
 
   <body>
+    <!-- App Component안에 Subject Component 2개 -->
+
+    <!-- App Component -->
     <div id="app">
       <h4>당신이 좋아하는 파트를 선택하세요</h4>
       <h2>총 투표수 : {{ total }}</h2>
+      <!-- Subject Component 2개 -->
       <subject v-on:add-total-count="addTotalCount" title="코딩"></subject>
       <subject v-on:add-total-count="addTotalCount" title="알고리즘"></subject>
     </div>
     <script>
       Vue.component("subject", {
-        template:
-          '<button v-on:click="addCount">{{title}} - {{ count }}</button>',
+        template: '<button v-on:click="addCount">{{title}} - {{ count }}</button>',
         //props 설정
         props: ["title"],
         data: function () {
