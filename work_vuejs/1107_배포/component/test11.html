@@ -30,7 +30,12 @@
     </template>
 
     <script>
-      const bus = new Vue();
+      // 4개의 Vue 객체
+
+      // (1) => 이벤트 등록된 곳은 bus
+      const bus = new Vue(); // app과 동등한 관계 => 밖에 있는
+
+      // (2)
       Vue.component("my-count", {
         template: "#mycount",
         data() {
@@ -40,12 +45,13 @@
         },
         methods: {
           send() {
-            bus.$emit("updateLog", this.count);
+            bus.$emit("updateLog", this.count); // bus라는 객체에 이벤트 발생 중
             this.count = "";
           },
         },
       });
 
+      // (3)
       Vue.component("log", {
         template: "#log",
         data() {
@@ -61,10 +67,11 @@
           },
         },
         created: function () {
-          bus.$on("updateLog", this.updateLog);
+          bus.$on("updateLog", this.updateLog); // bus라는 객체에 이벤트 리슨 중
         },
       });
 
+      // (4)
       new Vue({
         el: "#app",
       });
