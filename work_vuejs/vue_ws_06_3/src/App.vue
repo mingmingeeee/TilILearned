@@ -1,7 +1,66 @@
+<template>
+  <div id="app">
+    <header-nav />
+    <router-view />
+  </div>
+</template>
+
+<script>
+import HeaderNav from "@/components/common/HeaderNav.vue";
+
+export default {
+  components: {
+    HeaderNav,
+  },
+};
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+nav {
+  padding: 30px;
+}
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
+}
+
 a {
   text-decoration: none;
   color: #787878;
 }
+
+.ssafy_logo {
+  width: 150px;
+}
+
+.header {
+  text-align: center;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.3);
+}
+
+.header img {
+  vertical-align: middle;
+}
+
+.logo {
+  display: inline-block;
+  font-size: 30px;
+  font-weight: bold;
+}
+
 input,
 textarea,
 .view {
@@ -15,10 +74,12 @@ textarea,
   color: #787878;
   font-size: medium;
 }
+
 label {
   display: inline-block;
   width: 80px;
 }
+
 button,
 .btn {
   width: 8%;
@@ -31,45 +92,34 @@ button,
   font-size: large;
   cursor: pointer;
 }
+
 .regist {
   padding: 10px;
 }
+
 .regist_form {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
 }
-.ssafy_logo {
-  width: 150px;
-}
-.header {
-  text-align: center;
-  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.3);
-}
-.header img {
-  vertical-align: middle;
-}
-.logo {
-  display: inline-block;
-  font-size: 30pt;
-  font-weight: bold;
-}
+
 .underline {
   display: inline-block;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 70%, cyan 30%);
 }
-#article-list {
+
+#book-list {
   border-collapse: collapse;
   width: 100%;
 }
 
-#article-list thead {
+#book-list thead {
   background-color: #ccc;
   font-weight: bold;
 }
 
-#article-list td,
-#article-list th {
+#book-list td,
+#book-list th {
   text-align: center;
   border-bottom: 1px solid #ddd;
   height: 50px;
@@ -82,3 +132,4 @@ tr:nth-child(even) {
 .container {
   text-align: justify;
 }
+</style>
