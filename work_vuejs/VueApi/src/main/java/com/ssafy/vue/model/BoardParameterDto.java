@@ -63,5 +63,24 @@ public class BoardParameterDto {
 		this.word = word;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("BoardParameterDto [pg=");
+		builder.append(pg);
+		builder.append(", spp=");
+		builder.append(spp);
+		builder.append(", start=");
+		builder.append(start);
+		builder.append(", key=");
+		builder.append(key);
+		builder.append(", word=");
+		builder.append(word);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
+
 }
 

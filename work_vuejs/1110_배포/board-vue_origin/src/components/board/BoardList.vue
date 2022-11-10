@@ -48,7 +48,30 @@ export default {
   created() {
     // 비동기
     // TODO : 글목록 얻기.
-    http.get(`/board/list`, { word: "하이" }).then(({ data }) => (this.articles = data)); // { data }하면 object에서 data만 꺼내옴
+    http.get(`/board`).then(({ data }) => (this.articles = data)); // { data }하면 object에서 data만 꺼내옴
+    // this.articles = [
+    //   {
+    //     articleno: 10,
+    //     userid: "안효인",
+    //     subject: "안녕하세요",
+    //     hit: 10,
+    //     regtime: "2022-11-08 17:03:15",
+    //   },
+    //   {
+    //     articleno: 9,
+    //     userid: "kimssafy",
+    //     subject: "안녕하세요2",
+    //     hit: 102,
+    //     regtime: "2022-11-08 14:13:15",
+    //   },
+    //   {
+    //     articleno: 8,
+    //     userid: "parkssafy",
+    //     subject: "안녕하세요7",
+    //     hit: 24,
+    //     regtime: "2022-11-07 11:03:15",
+    //   },
+    // ];
   },
   methods: {
     moveWrite() {
