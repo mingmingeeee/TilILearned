@@ -23,7 +23,10 @@
           </tr>
         </thead>
         <tbody>
-          <board-list-item v-for="article in articles" :key="article.articleno" :article="article"></board-list-item>
+          <board-list-item
+            v-for="article in articles"
+            :key="article.articleno"
+            :article="article"></board-list-item>
         </tbody>
       </table>
     </div>
@@ -48,7 +51,18 @@ export default {
   created() {
     // 비동기
     // TODO : 글목록 얻기.
-    http.get(`/board/list`, { word: "하이" }).then(({ data }) => (this.articles = data)); // { data }하면 object에서 data만 꺼내옴
+
+    let query = {
+      pg: 1,
+      key: "",
+      word: "",
+    };
+
+    http
+      .get(`/board`, {
+        query: query,
+      })
+      .then(({ data }) => (this.articles = data)); // { data }하면 object에서 data만 꺼내옴
   },
   methods: {
     moveWrite() {
