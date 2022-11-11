@@ -3,9 +3,13 @@
     <td>{{ no }}</td>
     <td>{{ isbn }}</td>
     <td>
-      <router-link :to="{ name: 'BookDetail', params: { isbn } }">{{
-        title
-      }}</router-link>
+      <router-link
+        :to="{
+          name: 'BookDetail',
+          params: { isbn: isbn },
+        }"
+        >{{ title }}</router-link
+      >
     </td>
     <td>{{ author }}</td>
     <td>{{ price | filterPrice }}원</td>
@@ -14,6 +18,7 @@
 
 <script>
 export default {
+  // 부모 component로 부터 전달받은 도서정보
   props: {
     no: String,
     isbn: String,
@@ -24,4 +29,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style scope>
+td {
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  height: 50px;
+}
+</style>

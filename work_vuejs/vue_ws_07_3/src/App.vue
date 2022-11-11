@@ -20,7 +20,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 
@@ -95,12 +94,14 @@ button,
 
 .regist {
   padding: 10px;
+  text-align: center;
 }
 
 .regist_form {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
+  text-align: justify;
 }
 
 .underline {
@@ -118,7 +119,6 @@ button,
   font-weight: bold;
 }
 
-#book-list td,
 #book-list th {
   text-align: center;
   border-bottom: 1px solid #ddd;
@@ -127,9 +127,5 @@ button,
 
 tr:nth-child(even) {
   background-color: #f2f2f2;
-}
-
-.container {
-  text-align: justify;
 }
 </style>

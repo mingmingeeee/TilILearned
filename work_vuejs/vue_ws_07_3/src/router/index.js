@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
+// Dynamic module loading을 통해 component를 불러옴
 const routes = [
   {
     path: "/",
@@ -12,8 +13,8 @@ const routes = [
   {
     path: "/book",
     name: "BookView",
-    redirect: "/book/list", // "/book"을 요청하더라도 바로 "/book/list"로 이동 !
     component: () => import("@/views/BookView.vue"),
+    redirect: "/book/list",
     children: [
       {
         path: "list",
@@ -21,7 +22,7 @@ const routes = [
         component: () => import("@/components/book/BookList.vue"),
       },
       {
-        path: "create",
+        path: "write",
         name: "BookCreate",
         component: () => import("@/components/book/BookCreate.vue"),
       },
