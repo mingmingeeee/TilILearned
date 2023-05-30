@@ -7,3 +7,5 @@
 **/target/
 **/build/
 **/node_modules/
+**/resources/SQL/housedata2_housedeal.sql
+**/work_web/아파트매매정보_크롤링/20220519_aptcrawl.sql
